@@ -4,6 +4,10 @@ from analysis.models import Match
 
 def home(request):
 
-    context = {}
+    matches = Match.objects.all()
 
-    return render(request, 'analysis/pages/home.html', context)
+    context = {
+        'matches': matches,
+    }
+
+    return render(request, 'analysis/pages/blank.html', context)
