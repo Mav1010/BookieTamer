@@ -15,3 +15,6 @@ class Match(models.Model):
     odds_draw = models.FloatField(null=True)
     odds_away = models.FloatField(null=True)
 
+    class Meta:
+        verbose_name_plural = "matches"
+
