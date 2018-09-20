@@ -1,3 +1,9 @@
 from django.shortcuts import render
+from analysis.models import Match
 
-# Create your views here.
+
+def home(request):
+
+    context = {}
+
+    return render(request, 'analysis/pages/home.html', context)
