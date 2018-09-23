@@ -1,13 +1,16 @@
 from django.shortcuts import render
-from analysis.models import Match
+from django_filters.views import FilterView
 
+from analysis.models import Match
+from analysis.filters import MatchFilter
 
 def home(request):
+    context = {}
 
-    matches = Match.objects.all()
+    return render(request, 'analysis/pages/home.html', context)
 
-    context = {
-        'matches': matches,
-    }
-
-    return render(request, 'analysis/pages/blank.html', context)
+class MatchList(FilterView):
+    model = Match
+    context_object_name = 'match'
+    template_name = 'analysis/pages/data.html'
+    filterset_class = MatchFilter

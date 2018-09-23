@@ -6,5 +6,6 @@ from analysis import views
 
 
 urlpatterns = [
-    path('home/', views.home, name="home")
+    path('home/', views.home, name="home"),
+    path('data/', views.MatchList.as_view(), name="data"),
 ]

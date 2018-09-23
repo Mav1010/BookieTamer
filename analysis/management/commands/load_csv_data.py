@@ -1,7 +1,7 @@
 import csv
 import logging
 from django.core.management import BaseCommand
-from analysis.models import Match
+from analysis.models import Match, Team, Division
 
 
 logger = logging.getLogger(__name__)
@@ -10,14 +10,14 @@ class Command(BaseCommand):
     help = 'Populates model with csv data'
 
     def handle(self, *args, **kwargs):
-        with open('C:\\Users\\Mac\\PycharmProjects\\BookieTamer\\data1.csv') as f:
+        with open('C:\\Users\\Mac\\PycharmProjects\\BookieTamer\\data.csv') as f:
             reader = csv.DictReader(f)
             for row in reader:
                 logger.warning("this is row {}".format(row['odds_home']))
-                division=row['division']
+                division=Division.objects.get(name=row['division'])
                 date=row['date']
-                home_team=row['home_team']
-                away_team=row['away_team']
+                home_team=Team.objects.get(name=row['home_team'])
+                away_team=Team.objects.get(name=row['away_team'])
                 ft_home_goals=row['ft_home_goals']
                 ft_away_goals=row['ft_away_goals']
                 ft_result=row['ft_result']
