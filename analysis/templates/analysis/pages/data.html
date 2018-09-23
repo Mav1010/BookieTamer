@@ -1,0 +1,218 @@
+{% extends 'analysis/base.html' %}
+{% load analysis_extras %}
+
+{% block title %}Data{% endblock %}
+
+{% block body %}
+    <div class="col-sm-12 py-4" xmlns="http://www.w3.org/1999/html">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1 class="h4 mt-1 font-weight-bold">Games
+                            <span class="badge badge-pill badge-primary" data-toggle="tooltip" data-placement="right" title="Number of games displayed">{{ match.count }}</span>
+                            <span> {{ filter.qs. }}</span>
+                        </h1>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <a href="#collapseFilters" class="btn btn-outline-primary" data-toggle="collapse" aria-controls="collapseFilters">
+                            Filters
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 mx-2 collapse" id="collapseFilters">
+                        <div class="row">
+                            <div class="card-body">
+                                <form method="get" action="">
+                                    <div class="row">
+                                        <div class="col-sm-3" style="border-right: 1px solid rgba(0,0,0,0.15);">
+                                            <p class="filter-title">Division</p>
+                                            <div class="form-group">
+                                                {{ filter.form.division }}
+                                            </div>
+                                            <p class="filter-title">Home Team</p>
+                                            <div class="form-group">
+                                                {{ filter.form.home_team }}
+                                            </div>
+                                            <p class="filter-title">Away Team</p>
+                                            <div class="form-group">
+                                                {{ filter.form.away_team }}
+                                            </div>
+
+                                        </div>
+                                        <div class="col-sm-3" style="border-right: 1px solid rgba(0,0,0,0.15);">
+                                            <p class="filter-title">FT result</p>
+                                            <div class="form-group">
+                                                {{ filter.form.ft_result }}
+                                            </div>
+                                            <p class="filter-title">HT result</p>
+                                            <div class="form-group">
+                                                {{ filter.form.ht_result }}
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3" style="border-right: 1px solid rgba(0,0,0,0.15);">
+                                            <p class="filter-title">Date from</p>
+                                            <div class="form-group">
+                                                {{ filter.form.start_date }}
+                                            </div>
+                                            <p class="filter-title">Date to</p>
+                                            <div class="form-group">
+                                                {{ filter.form.end_date }}
+                                            </div>
+                                            <p class="filter-title">Home goals range</p>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                         {{ filter.form.ft_home_goals_from|css_class:"form-control" }}
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                         {{ filter.form.ft_home_goals_to|css_class:"form-control" }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <p class="filter-title">Away goals range</p>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                         {{ filter.form.ft_away_goals_from|css_class:"form-control" }}
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                         {{ filter.form.ft_away_goals_to|css_class:"form-control" }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3" style="border-right: 1px solid rgba(0,0,0,0.15);">
+                                            <p class="filter-title">Odds home range</p>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                         {{ filter.form.odds_home_from|css_class:"form-control" }}
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                         {{ filter.form.odds_home_to|css_class:"form-control" }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <p class="filter-title">Odds draw range</p>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                         {{ filter.form.odds_draw_from|css_class:"form-control" }}
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                         {{ filter.form.odds_draw_to|css_class:"form-control" }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <p class="filter-title">Odds away range</p>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                         {{ filter.form.odds_away_from|css_class:"form-control" }}
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                         {{ filter.form.odds_away_to|css_class:"form-control" }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <p class="filter-title">Order by</p>
+                                            <div class="form-group">
+                                                {{ filter.form.order_by|css_class:"form-control" }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr class="text-center">
+                            <th>Division</th>
+                            <th>Date</th>
+                            <th>Home Team</th>
+                            <th>Away Team</th>
+                            <th>Full time result</th>
+                            <th>HG</th>
+                            <th>AG</th>
+                            <th>Half Time result</th>
+                            <th>Half Time HG</th>
+                            <th>Half Time AG</th>
+                            <th>Odds Home</th>
+                            <th>Odds Draw</th>
+                            <th>Odds Away</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for game in filter.qs %}
+                            <tr class="text-center">
+                                <td class="thin">
+                                    {{ game.division }}
+                                </td>
+                                <td class="thin">
+                                    {{ game.date }}
+                                </td>
+                                <td class="thin">
+                                    {{ game.home_team }}
+                                </td>
+                                <td class="thin">
+                                    {{ game.away_team }}
+                                </td>
+                                <td class="thin">
+                                    {{ game.get_ft_result_display }}
+                                </td>
+                                <td class="thin">
+                                    {{ game.ft_home_goals }}
+                                </td>
+                                <td class="thin">
+                                    {{ game.ft_away_goals }}
+                                </td>
+                                <td class="thin">
+                                    {{ game.get_ht_result_display }}
+                                </td>
+                                <td class="thin">
+                                    {{ game.ht_home_goals }}
+                                </td>
+                                <td class="thin">
+                                    {{ game.ht_away_goals }}
+                                </td>
+                                <td class="thin">
+                                    {{ game.odds_home }}
+                                </td>
+                                <td class="thin">
+                                    {{ game.odds_draw }}
+                                </td>
+                                <td class="thin">
+                                    {{ game.odds_away }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            if (window.location.href.indexOf('division') >-1) {
+                $('#collapseFilters').addClass('show');
+            }
+        });
+
+
+    </script>
+
+{% endblock %}

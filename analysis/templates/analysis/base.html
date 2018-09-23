@@ -10,12 +10,53 @@
     <meta name="author" content="">
 
     <title>{% block title %}{% endblock %} - Bookie Tamer</title>
+
     {% include 'analysis/includes/base_js_css_head.html' %}
 
 </head>
 
+{% load static %}
 
-{% block body %}
+    <body class="bg-dark">
 
-{% endblock body %}
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand navbar-light bg-light static-top">
+        <ul class="navbar-nav mr-4">
+            <li class="nav-item"><a href="{% url "home" %}"><img src="{% static "analysis/logo.png" %}" width="70" height="50"></a></li>
+        </ul>
+        <ul class="navbar-nav text-dark">
+            <li class="nav-item mx-2"><a class="nav-link" href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li class="nav-item mx-2"><a class="nav-link" href="{% url "data" %}"><i class="fas fa-database"></i> Data</a></li>
+            <li class="nav-item mx-2"><a class="nav-link" href="#"><i class="fas fa-list-ul"></i> Bet list</a></li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item mx-2"><a class="nav-link" href="#"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-body">
+        {% block sidebar %}
+        {% endblock %}
+        <!-- Main content -->
+        <main class="main">
+            <div class="container-fluid" id="main-block">
+                <div class="row">
+
+                    {% block body %}
+                    {% endblock %}
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Enabling tooltips -->
+    <script type="text/javascript">
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+
+
+
 
