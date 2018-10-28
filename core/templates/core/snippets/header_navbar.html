@@ -9,7 +9,8 @@
         <li class="nav-item mx-2"><a class="nav-link" href="{% url "data" %}"><i class="fas fa-database"></i> Data</a></li>
         <li class="nav-item mx-2"><a class="nav-link" href="{% url "games_to_bet" %}"><i class="fas fa-cloud-download-alt"></i> Get games</a></li>
         <li class="nav-item mx-2"><a class="nav-link" href="#"><i class="fas fa-list-ul"></i> Bet list</a></li>
-        <li class="nav-item mx-2"><a class="nav-link" href="#"><i class="fas fa-wrench"></i> Settings</a></li>
+{#        #TODO see if pk=1 can be optimized #}
+        <li class="nav-item mx-2"><a class="nav-link" href="{% url "datafetch_settings" pk=1 %}"><i class="fas fa-wrench"></i> Settings</a></li>
     </ul>
     <ul class="navbar-nav ml-auto">
         <li class="nav-item mx-2"><a class="nav-link" href="#"><i class="fas fa-sign-in-alt"></i> Login</a></li>

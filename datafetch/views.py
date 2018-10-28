@@ -1,5 +1,6 @@
 from django.shortcuts import render_to_response
 from django.views.generic import UpdateView
+from django import forms
 
 from datafetch.models import DataFetchSettings
 from datafetch.utils import get_fortuna_games
@@ -21,3 +22,11 @@ class DataFetchSettingsUpdateView(UpdateView):
               'odds_1_max',
               ]
     template_name = 'datafetch/settings_form.html'
+    success_url = '/settings/1'
+    widgets = {
+        'date_offset': forms.NumberInput(attrs={'class': 'col-sm-4'}),
+        'difference_x_range_min': forms.NumberInput(attrs={'class': 'col-sm-4'}),
+        'difference_x_range_max': forms.NumberInput(attrs={'class': 'col-sm-4'}),
+        'odds_1_min': forms.NumberInput(attrs={'class': 'col-sm-4'}),
+        'odds_1_max': forms.NumberInput(attrs={'class': 'col-sm-4'}),
+    }

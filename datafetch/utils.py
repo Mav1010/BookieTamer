@@ -3,6 +3,8 @@ import pandas as pd
 from datetime import timedelta, date, datetime
 import BookieTamer.settings as settings
 
+from datafetch.models import DataFetchSettings
+
 def bookie_probability_real(x1, xX, x2):
 
     bookie_rate_1 = x1
@@ -25,8 +27,18 @@ def get_fortuna_games():
     all_leagues = [settings.FORTUNA_URL_SERIE_A, settings.FORTUNA_URL_PREMIER_LEAGUE, settings.FORTUNA_URL_LIGUE_1,
                    settings.FORTUNA_URL_PRIMERA_DIVISION, settings.FORTUNA_URL_BUNDESLIGA]
 
-    date_limit = datetime.today() + timedelta(settings.DATE_OFFSET)
     current_year = date.today().year
+
+    datafetch_settings = DataFetchSettings.objects.get(pk=1)
+
+    difference_x_range_min = datafetch_settings.difference_x_range_min
+    difference_x_range_max = datafetch_settings.difference_x_range_max
+    odds_1_min = datafetch_settings.odds_1_min
+    odds_1_max = datafetch_settings.odds_1_max
+    date_offset = datafetch_settings.date_offset
+
+    date_limit = datetime.today() + timedelta(date_offset)
+
 
     games_to_book = {'Match Day': [],
                      'Teams': [],
@@ -62,12 +74,12 @@ def get_fortuna_games():
                 difference = round(
                     (coef_probability['bookie_probabilty_real_1']) - (coef_probability['bookie_probabilty_real_2']), 3)
 
-                if (settings.DIFFERENCE_RANGE_MIN_X <= difference <= settings.DIFFERENCE_RANGE_MAX_X):
+                if (difference_x_range_min <= difference <= difference_x_range_max):
                     games_to_book['Match Day'].append(match_day)
                     games_to_book['Teams'].append(teams[:-3])
                     games_to_book['Betting reason'].append(difference)
                     games_to_book['X coef'].append(coef_x)
-                if (settings.RATE_1_MIN <= coef_1 <= settings.RATE_1_MAX):
+                if (odds_1_min <= coef_1 <= odds_1_max):
                     games_to_book['Match Day'].append(match_day)
                     games_to_book['Teams'].append(teams[:-3])
                     games_to_book['Betting reason'].append(coef_1)
