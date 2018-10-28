@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django_filters',
     'core',
     'analysis',
+    'datafetch',
 ]
 
 MIDDLEWARE = [
@@ -119,9 +120,18 @@ SHELL_PLUS = "ipython"
 
 """Base urls to scrap data from"""
 
-BASE_URL= 'https://www.ifortuna.cz/cz/sazeni/fotbal/'
-SERIE_A = 'serie-a'
-PREMIER_LEAGUE = 'premier-league'
-LIGUE_1 = '1-francouzska-liga'
-PRIMERA_DIVISION = 'primera-division'
-BUNDESLIGA = 'bundesliga'
+BASE_FORTUNA_URL= 'https://www.ifortuna.cz/cz/sazeni/fotbal/'
+FORTUNA_URL_SERIE_A = 'serie-a'
+FORTUNA_URL_PREMIER_LEAGUE = 'premier-league'
+FORTUNA_URL_LIGUE_1 = '1-francouzska-liga'
+FORTUNA_URL_PRIMERA_DIVISION = 'primera-division'
+FORTUNA_URL_BUNDESLIGA = 'bundesliga'
+
+"""Datafetch settings"""
+
+COEF_LIMIT = 1.2
+DIFFERENCE_RANGE_MIN_X = -0.090
+DIFFERENCE_RANGE_MAX_X = 0.090
+RATE_1_MIN = 1.38
+RATE_1_MAX = 1.48
+DATE_OFFSET = 2
