@@ -114,3 +114,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 SHELL_PLUS = "ipython"
+
+"""Base urls to scrap data from"""
+
+BASE_URL= 'https://www.ifortuna.cz/cz/sazeni/fotbal/'
+SERIE_A = 'serie-a'
+PREMIER_LEAGUE = 'premier-league'
+LIGUE_1 = '1-francouzska-liga'
+PRIMERA_DIVISION = 'primera-division'
+BUNDESLIGA = 'bundesliga'
