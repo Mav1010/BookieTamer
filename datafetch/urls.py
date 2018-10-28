@@ -3,5 +3,5 @@ from django.urls import path
 from datafetch import views
 
 urlpatterns = [
-    # path('get-data/', views.XXX, name="data"),
+    path('games-to-bet/', views.games_to_bet_list, name="games_to_bet"),
 ]
