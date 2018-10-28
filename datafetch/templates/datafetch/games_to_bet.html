@@ -12,7 +12,22 @@
                         <h1 class="h4 mt-1 font-weight-bold">Games</h1>
                     </div>
                 </div>
-    <div>
-        {{ html_table| safe }}
-    </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        {{ html_table| safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
+
+    <script>
+        $(document).ready(function(){
+            $('.dataframe').addClass('table table-striped');
+            $('tr:first-child').css("text-align", "");
+        });
+    </script>
 {% endblock %}
+

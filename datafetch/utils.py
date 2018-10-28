@@ -40,7 +40,10 @@ def get_fortuna_games():
 
         for index, row in games.iterrows():
             if not row.isnull().any():
-                match_day = datetime.strptime(row.date[:4] + '.' + str(current_year), '%d.%m.%Y')
+                if len(row.date) == 12:
+                    match_day = datetime.strptime(row.date[:5] + '.' + str(current_year), '%d.%m.%Y')
+                else:
+                    match_day = datetime.strptime(row.date[:4] + '.' + str(current_year), '%d.%m.%Y')
             else:
                 match_day = None
             if (not row.isnull().any()) and (match_day < date_limit):
