@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'django_filters',
     'core',
+    'analysis',
 ]
 
 MIDDLEWARE = [
