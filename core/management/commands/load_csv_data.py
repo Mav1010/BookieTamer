@@ -10,11 +10,20 @@ class Command(BaseCommand):
     help = 'Populates model with csv data'
 
     def handle(self, *args, **kwargs):
-        with open('C:\\Users\\Mac\\PycharmProjects\\BookieTamer\\data.csv') as f:
+
+        #import teams
+        with open('C:\\Users\\Mac\\PycharmProjects\\BookieTamer\\data.csv', 'r') as f:
             reader = csv.DictReader(f)
             for row in reader:
+                team = row['home_team']
+                division = Division.objects.get(name=row['division'])
+                if not Team.objects.filter(name=team):
+                    team_instance = Team.objects.create(name=team, division=division)
+                    team_instance.save()
+
+                #import games
                 logger.warning("this is row {}".format(row['odds_home']))
-                division=Division.objects.get(name=row['division'])
+                division=division
                 date=row['date']
                 home_team=Team.objects.get(name=row['home_team'])
                 away_team=Team.objects.get(name=row['away_team'])

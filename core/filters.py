@@ -8,7 +8,7 @@ from core import choices as choices
 
 class MatchFilter(django_filters.FilterSet):
 
-    division = django_filters.ModelChoiceFilter(queryset=Division.objects.filter(name__isnull=False),
+    division = django_filters.ModelChoiceFilter(queryset=Division.objects.all(),
                                                 widget=forms.Select(attrs={'class':'form-control'}))
 
     home_team = django_filters.ModelChoiceFilter(widget=forms.Select(attrs={'class':'form-control'}),

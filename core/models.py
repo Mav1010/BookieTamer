@@ -1,6 +1,6 @@
 from django.db import models
 
-import core.choices as choices
+import core.choices as choices_core
 
 
 class Match(models.Model):
@@ -10,10 +10,10 @@ class Match(models.Model):
     away_team = models.ForeignKey('Team', null=True, related_name='away_team', on_delete=models.SET_NULL)
     ft_home_goals = models.SmallIntegerField(null=False)
     ft_away_goals = models.SmallIntegerField(null=False)
-    ft_result = models.SmallIntegerField(choices=choices.RESULT, null=False)
+    ft_result = models.SmallIntegerField(choices=choices_core.RESULT, null=False)
     ht_home_goals = models.SmallIntegerField(null=False)
     ht_away_goals = models.SmallIntegerField(null=False)
-    ht_result = models.SmallIntegerField(choices=choices.RESULT, null=False)
+    ht_result = models.SmallIntegerField(choices=choices_core.RESULT, null=False)
     odds_home = models.FloatField(null=True)
     odds_draw = models.FloatField(null=True)
     odds_away = models.FloatField(null=True)
@@ -31,7 +31,7 @@ class Team(models.Model):
 
 
 class Division(models.Model):
-    name = models.CharField(max_length=50, blank=True)
+    name = models.IntegerField(choices=choices_core.LEAGUES)
 
     def __str__(self):
-        return str(self.name)
+        return str(self.get_name_display())
