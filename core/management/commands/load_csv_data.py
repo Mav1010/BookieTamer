@@ -1,7 +1,7 @@
 import csv
 import logging
 from django.core.management import BaseCommand
-from analysis.models import Match, Team, Division
+from core.models import Match, Team, Division
 
 
 logger = logging.getLogger(__name__)

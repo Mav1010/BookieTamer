@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('analysis', '0002_corrected_models'),
+        ('core', '0002_corrected_models'),
     ]
 
     operations = [
@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(blank=True, max_length=100)),
-                ('division', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='analysis.Division')),
+                ('division', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='core.Division')),
             ],
         ),
         migrations.AlterModelOptions(
@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='match',
             name='away_team',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='away_team', to='analysis.Team'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='away_team', to='core.Team'),
         ),
         migrations.AlterField(
             model_name='match',
@@ -48,7 +48,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='match',
             name='home_team',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='home_team', to='analysis.Team'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='home_team', to='core.Team'),
         ),
         migrations.AlterField(
             model_name='match',

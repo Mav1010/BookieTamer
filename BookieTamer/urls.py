@@ -5,7 +5,7 @@ from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('analysis.urls')),
+    path('', include('core.urls')),
 
     # in order to go to home if blank address
     path('', RedirectView.as_view(url='home')),

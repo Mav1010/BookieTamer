@@ -11,7 +11,7 @@
 
     <title>{% block title %}{% endblock %} - Bookie Tamer</title>
 
-    {% include 'analysis/includes/base_js_css_head.html' %}
+    {% include 'core/includes/base_js_css_head.html' %}
 
 </head>
 
@@ -22,7 +22,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand navbar-light bg-light static-top">
         <ul class="navbar-nav mr-4">
-            <li class="nav-item"><a href="{% url "home" %}"><img src="{% static "analysis/logo.png" %}" width="70" height="50"></a></li>
+            <li class="nav-item"><a href="{% url "home" %}"><img src="{% static "core/logo.png" %}" width="70" height="50"></a></li>
         </ul>
         <ul class="navbar-nav text-dark">
             <li class="nav-item mx-2"><a class="nav-link" href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>

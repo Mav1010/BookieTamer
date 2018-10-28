@@ -2,8 +2,8 @@ import django_filters
 
 from django import forms
 
-from analysis.models import Match, Team, Division
-from analysis import choices as choices
+from core.models import Match, Team, Division
+from core import choices as choices
 
 
 class MatchFilter(django_filters.FilterSet):

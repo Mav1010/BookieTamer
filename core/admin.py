@@ -1,5 +1,5 @@
 from django.contrib import admin
-from analysis.models import *
+from core.models import *
 
 
 class MatchAdmin(admin.ModelAdmin):

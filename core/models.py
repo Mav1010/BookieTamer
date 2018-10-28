@@ -1,6 +1,6 @@
 from django.db import models
 
-import analysis.choices as choices
+import core.choices as choices
 
 
 class Match(models.Model):

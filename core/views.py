@@ -1,18 +1,18 @@
 from django.shortcuts import render
 from django_filters.views import FilterView
 
-from analysis.models import Match, Division, Team
-from analysis.filters import MatchFilter
+from core.models import Match, Division, Team
+from core.filters import MatchFilter
 
 def home(request):
     context = {}
 
-    return render(request, 'analysis/pages/home.html', context)
+    return render(request, 'core/pages/home.html', context)
 
-class MatchList(FilterView,):
+class MatchList(FilterView):
     model = Match
     context_object_name = 'match'
-    template_name = 'analysis/pages/data.html'
+    template_name = 'core/pages/data.html'
     filterset_class = MatchFilter
 
     def get_context_data(self, **kwargs):

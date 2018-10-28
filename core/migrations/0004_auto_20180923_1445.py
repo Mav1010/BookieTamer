@@ -7,13 +7,13 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('analysis', '0003_team_division_added'),
+        ('core', '0003_team_division_added'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='match',
             name='division',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='analysis.Division'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='core.Division'),
         ),
     ]
