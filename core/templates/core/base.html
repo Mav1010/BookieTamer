@@ -20,20 +20,9 @@
     <body class="bg-dark">
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand navbar-light bg-light static-top">
-        <ul class="navbar-nav mr-4">
-            <li class="nav-item"><a href="{% url "home" %}"><img src="{% static "core/logo.png" %}" width="70" height="50"></a></li>
-        </ul>
-        <ul class="navbar-nav text-dark">
-            <li class="nav-item mx-2"><a class="nav-link" href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-            <li class="nav-item mx-2"><a class="nav-link" href="{% url "data" %}"><i class="fas fa-database"></i> Data</a></li>
-            <li class="nav-item mx-2"><a class="nav-link" href="{% url "games_to_bet" %}"><i class="fas fa-cloud-download-alt"></i> Get games</a></li>
-            <li class="nav-item mx-2"><a class="nav-link" href="#"><i class="fas fa-list-ul"></i> Bet list</a></li>
-        </ul>
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item mx-2"><a class="nav-link" href="#"><i class="fas fa-sign-in-alt"></i> Login</a></li>
-        </ul>
-    </nav>
+    {% block navbar %}
+        {% include 'core/snippets/header_navbar.html' %}
+    {% endblock %}
 
     <div class="main-body">
         {% block sidebar %}
