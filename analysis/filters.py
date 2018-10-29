@@ -43,7 +43,6 @@ class MatchFilter(django_filters.FilterSet):
 
     ft_away_goals_from = django_filters.NumberFilter(field_name='ft_away_goals',
                                                      lookup_expr=('gte'))
-
     ft_away_goals_to = django_filters.NumberFilter(field_name='ft_away_goals',
                                                    lookup_expr=('lte'))
 
@@ -87,9 +86,5 @@ class MatchFilter(django_filters.FilterSet):
 
     def look_by_away_team(self, queryset, name, value):
         qs = queryset.filter(away_team=value)
-        return qs
-
-    def look_by_home_goals(self, queryset, name, value):
-        qs= queryset.filter(ft_home_goals=value)
         return qs
 

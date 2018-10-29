@@ -21,6 +21,9 @@ class Match(models.Model):
     class Meta:
         verbose_name_plural = "matches"
 
+    def __str__(self):
+        return '{} - {} on {}'.format(self.home_team, self.away_team, self.date)
+
 
 class Team(models.Model):
     name = models.CharField(max_length=100, blank=True)
