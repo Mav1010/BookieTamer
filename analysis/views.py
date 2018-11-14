@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import JsonResponse
 from django_filters.views import FilterView
 
 from analysis.models import Match, Division, Team
@@ -18,11 +19,6 @@ class MatchList(FilterView,):
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        # get_data = self.request.GET.dict()
-        # for key, value in self.request.GET.dict().items():
-        #     if value:
-        #         context[key] = value
-
         division_list = []
         if self.request.GET.get('division'):
             division_list =  self.request.GET.get('division')
@@ -81,3 +77,14 @@ class MatchList(FilterView,):
             context['draws_percentage'] = 0
 
         return context
+
+
+
+def ajax_get_teams_by_division(request):
+    division = request.GET.get('division', None)
+    teams = Team.objects.filter(division=division)
+    data = {
+        'teams': tuple(((team.name, team.id) for team in teams))
+    }
+    print(data)
+    return JsonResponse(data)
