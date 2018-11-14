@@ -11,8 +11,9 @@ class MatchFilter(django_filters.FilterSet):
     division = django_filters.ModelChoiceFilter(queryset=Division.objects.filter(name__isnull=False),
                                                 widget=forms.Select(attrs={'class':'form-control'}))
 
-    home_team = django_filters.ChoiceFilter(widget=forms.Select(attrs={'class':'form-control'}),
-                                            choices="")
+    home_team = django_filters.ModelChoiceFilter(widget=forms.Select(attrs={'class':'form-control'}),
+                                                 lookup_expr=look_by_home_team(),
+                                                queryset=Te)
 
     away_team = django_filters.ChoiceFilter(widget=forms.Select(attrs={'class':'form-control'}),
                                                  choices="")
