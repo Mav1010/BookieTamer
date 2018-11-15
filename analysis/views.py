@@ -1,5 +1,3 @@
-from django.http import JsonResponse
-
 from django_filters.views import FilterView
 
 from core.models import Match, Division, Team
@@ -73,13 +71,4 @@ class MatchList(FilterView):
 
         return context
 
-
-def ajax_get_teams_by_division(request):
-    division = request.GET.get('division', None)
-    teams = Team.objects.filter(division=division)
-    data = {
-        'teams': tuple(((team.name, team.id) for team in teams))
-    }
-    print(data)
-    return JsonResponse(data)
 

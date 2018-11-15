@@ -35,13 +35,13 @@
                                             <div class="form-group">
                                                 {{ filter.form.division }}
                                             </div>
-                                            <span class="show_on_division" style="display: none">
+                                            <span>
                                                 <p class="filter-title">Home Team</p>
                                                     <div class="form-group">
                                                         {{ filter.form.home_team }}
                                                     </div>
                                             </span>
-                                            <span class="show_on_division" style="display: none">
+                                            <span>
                                                 <p class="filter-title">Away Team</p>
                                                     <div class="form-group">
                                                         {{ filter.form.away_team }}
@@ -218,37 +218,6 @@
                 $('#collapseFilters').addClass('show');
             }
         });
-
-
-        $("#id_division").on('change', function(){
-            var division = $('#id_division').val();
-            console.log(division);
-            $('#id_home_team').html("");
-            if (division) {
-                $(".show_on_division").show();
-            }
-            else {
-                $(".show_on_division").hide();
-            }
-
-            $.ajax({
-                url: '{% url 'ajax_get_teams_by_division' %}',
-                data: {
-                    'division': division
-                },
-                dataType: 'json',
-                success: function (data) {
-                    for (var i=0; i < data.teams.length; i++) {
-                        var team = data.teams[i];
-                        var option = new Option(team, team.id);
-                        $('#id_home_team').append($(option));
-                    }
-                }
-            });
-        });
-
-
-
 
     </script>
 

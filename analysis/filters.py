@@ -5,6 +5,9 @@ from django import forms
 from core.models import Match, Team, Division
 from core import choices as choices
 
+def get_teams_by_division(request):
+    division = request.GET.get('division', 0)
+    return Team.objects.filter(name__isnull=False, division=division)
 
 class MatchFilter(django_filters.FilterSet):
 
@@ -12,11 +15,10 @@ class MatchFilter(django_filters.FilterSet):
                                                 widget=forms.Select(attrs={'class':'form-control'}))
 
     home_team = django_filters.ModelChoiceFilter(widget=forms.Select(attrs={'class':'form-control'}),
-                                                 lookup_expr=look_by_home_team(),
-                                                queryset=Te)
+                                                 queryset=get_teams_by_division)
 
-    away_team = django_filters.ChoiceFilter(widget=forms.Select(attrs={'class':'form-control'}),
-                                                 choices="")
+    away_team = django_filters.ModelChoiceFilter(widget=forms.Select(attrs={'class':'form-control'}),
+                                            queryset=get_teams_by_division)
 
 
     ft_result = django_filters.ChoiceFilter(choices=choices.RESULT,
@@ -80,10 +82,10 @@ class MatchFilter(django_filters.FilterSet):
 
 
     def look_by_home_team(self, queryset, name, value):
-        qs = queryset.filter(home_team=value)
+        qs = queryset.filter(home_team=name)
         return qs
 
     def look_by_away_team(self, queryset, name, value):
-        qs = queryset.filter(away_team=value)
+        qs = queryset.filter(away_team=name)
         return qs
 
