@@ -1,5 +1,19 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+BookieTamer/__pycache__/urls.cpython-36.pyc
+analysis/__pycache__/admin.cpython-36.pyc
+analysis/__pycache__/models.cpython-36.pyc
+analysis/__pycache__/urls.cpython-36.pyc
+analysis/__pycache__/views.cpython-36.pyc
+BookieTamer/__pycache__/settings.cpython-36.pyc
+BookieTamer/__pycache__/urls.cpython-36.pyc
+analysis/__pycache__/admin.cpython-36.pyc
+analysis/__pycache__/models.cpython-36.pyc
+analysis/__pycache__/urls.cpython-36.pyc
+analysis/__pycache__/views.cpython-36.pyc
+analysis/migrations/__pycache__/0001_match_model.cpython-36.pyc
+analysis/migrations/__pycache__/0002_corrected_models.cpython-36.pyc
+
 *.py[cod]
 
 # Distribution / packaging

@@ -12,12 +12,11 @@ class MatchFilter(django_filters.FilterSet):
                                                 widget=forms.Select(attrs={'class':'form-control'}))
 
     home_team = django_filters.ModelChoiceFilter(widget=forms.Select(attrs={'class':'form-control'}),
-                                                 method='look_by_home_team',
-                                                 queryset=Team.objects.filter(name__isnull=False))
+                                                 lookup_expr=look_by_home_team(),
+                                                queryset=Te)
 
-    away_team = django_filters.ModelChoiceFilter(widget=forms.Select(attrs={'class':'form-control'}),
-                                                 method='look_by_away_team',
-                                                 queryset=Team.objects.filter(name__isnull=False))
+    away_team = django_filters.ChoiceFilter(widget=forms.Select(attrs={'class':'form-control'}),
+                                                 choices="")
 
 
     ft_result = django_filters.ChoiceFilter(choices=choices.RESULT,
