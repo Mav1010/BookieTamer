@@ -11,6 +11,7 @@ class MatchList(FilterView):
     context_object_name = 'match'
     template_name = 'analysis/data.html'
     filterset_class = MatchFilter
+    paginate_by = 30
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
