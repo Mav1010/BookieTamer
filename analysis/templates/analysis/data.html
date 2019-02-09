@@ -219,6 +219,22 @@
             }
         });
 
+        $('#id_division').on('change', function() {
+            var divisionID = $('#id_division').val();
+            console.log(divisionID);
+            $.ajax({
+                url: "{% url 'analysis:ajax-load-teams-by-division' %}",
+                data: {
+                    'division_id': divisionID
+                },
+                success: function(response){
+                    $('.team-selection').html(response);
+                }
+            });
+            }
+        );
+
+
     </script>
 
 {% endblock %}

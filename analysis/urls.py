@@ -1,8 +1,13 @@
 from django.urls import path
 
-from analysis import views, filters
+from analysis import views
+
+
+app_name = 'analysis'
 
 urlpatterns = [
     path('data/', views.MatchList.as_view(), name="data"),
+    path('ajax-load-teams-by-division/', views.ajax_load_teams_by_division, name="ajax-load-teams-by-division"),
+
 ]
 

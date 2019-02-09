@@ -15,10 +15,19 @@ class Command(BaseCommand):
         with open('C:\\Users\\Mac\\PycharmProjects\\BookieTamer\\data.csv', 'r') as f:
             reader = csv.DictReader(f)
             for row in reader:
-                team = row['home_team']
-                division = Division.objects.get(name=row['division'])
-                if not Team.objects.filter(name=team):
-                    team_instance = Team.objects.create(name=team, division=division)
+                home_team = row['home_team']
+                away_team = row['away_team']
+
+                try:
+                    division = Division.objects.get(name=row['division'])
+                except Division.DoesNotExist:
+                    division = Division.objects.create(name=row['division'])
+
+                if not Team.objects.filter(name=home_team).exists():
+                    team_instance = Team.objects.create(name=home_team, division=division)
+                    team_instance.save()
+                if not Team.objects.filter(name=away_team).exists():
+                    team_instance = Team.objects.create(name=away_team, division=division)
                     team_instance.save()
 
                 #import games

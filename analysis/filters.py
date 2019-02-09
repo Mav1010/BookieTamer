@@ -2,23 +2,20 @@ import django_filters
 
 from django import forms
 
-from core.models import Match, Team, Division
 from core import choices as choices
+from core.models import Match, Team, Division
 
-def get_teams_by_division(request):
-    division = request.GET.get('division', 0)
-    return Team.objects.filter(name__isnull=False, division=division)
 
 class MatchFilter(django_filters.FilterSet):
 
     division = django_filters.ModelChoiceFilter(queryset=Division.objects.all(),
                                                 widget=forms.Select(attrs={'class':'form-control'}))
 
-    home_team = django_filters.ModelChoiceFilter(widget=forms.Select(attrs={'class':'form-control'}),
-                                                 queryset=get_teams_by_division)
+    home_team = django_filters.ModelChoiceFilter(widget=forms.Select(attrs={'class':'form-control team-selection'}),
+                                                 queryset=Team.objects.all())
 
-    away_team = django_filters.ModelChoiceFilter(widget=forms.Select(attrs={'class':'form-control'}),
-                                            queryset=get_teams_by_division)
+    away_team = django_filters.ModelChoiceFilter(widget=forms.Select(attrs={'class':'form-control team-selection'}),
+                                                 queryset=Team.objects.all())
 
 
     ft_result = django_filters.ChoiceFilter(choices=choices.RESULT,
