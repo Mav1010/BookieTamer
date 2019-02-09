@@ -36,9 +36,10 @@ def get_fortuna_games():
     odds_1_min = datafetch_settings.odds_1_min
     odds_1_max = datafetch_settings.odds_1_max
     date_offset = datafetch_settings.date_offset
+    odds_1_min_second = datafetch_settings.odds_1_min_second
+    odds_1_max_second = datafetch_settings.odds_1_max_second
 
     date_limit = datetime.today() + timedelta(date_offset)
-
 
     games_to_book = {'Match Day': [],
                      'Teams': [],
@@ -55,15 +56,16 @@ def get_fortuna_games():
         for index, row in games.iterrows():
             #check if row has empty values
             if not row.isnull().any():
-                #check if date is 1-9, or 10-31, then coverts it to datetime object
-                if len(row.date) == 12:
-                    match_day = datetime.strptime(row.date[:5] + '.' + str(current_year), '%d.%m.%Y')
-                else:
-                    match_day = datetime.strptime(row.date[:4] + '.' + str(current_year), '%d.%m.%Y')
+                #convert string to date object
+                try:
+                    match_day = datetime.strptime(row.date.split(" ")[0] + str(current_year), '%d.%m.%Y')
+                except ValueError:
+                    match_day = None
+                    continue
             else:
                 match_day = None
-            if (not row.isnull().any()) and (match_day <= date_limit):
 
+            if (not row.isnull().any()) and (match_day <= date_limit):
                 teams = row['games']
                 coef_1 = float(row['x1'])
                 coef_x = float(row['xX'])
@@ -84,5 +86,11 @@ def get_fortuna_games():
                     games_to_book['Teams'].append(teams[:-3])
                     games_to_book['Betting reason'].append(coef_1)
                     games_to_book['X coef'].append("-")
+                if (odds_1_min_second <= coef_1 <= odds_1_max_second):
+                    games_to_book['Match Day'].append(match_day)
+                    games_to_book['Teams'].append(teams[:-3])
+                    games_to_book['Betting reason'].append(coef_1)
+                    games_to_book['X coef'].append("-")
+
 
     return pd.DataFrame(games_to_book)

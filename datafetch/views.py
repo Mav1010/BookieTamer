@@ -20,13 +20,17 @@ class DataFetchSettingsUpdateView(UpdateView):
               'difference_x_range_max',
               'odds_1_min',
               'odds_1_max',
+              'odds_1_min_second',
+              'odds_1_max_second',
               ]
     template_name = 'datafetch/settings_form.html'
     success_url = '/settings/1'
-    widgets = {
-        'date_offset': forms.NumberInput(attrs={'class': 'col-sm-4'}),
-        'difference_x_range_min': forms.NumberInput(attrs={'class': 'col-sm-4'}),
-        'difference_x_range_max': forms.NumberInput(attrs={'class': 'col-sm-4'}),
-        'odds_1_min': forms.NumberInput(attrs={'class': 'col-sm-4'}),
-        'odds_1_max': forms.NumberInput(attrs={'class': 'col-sm-4'}),
-    }
+    # widgets = {
+    #     'date_offset': forms.NumberInput(attrs={'class': 'col-sm-1'}),
+    #     'difference_x_range_min': forms.NumberInput(attrs={'class': 'col-sm-1'}),
+    #     'difference_x_range_max': forms.NumberInput(attrs={'class': 'col-sm-2'}),
+    #     'odds_1_min': forms.NumberInput(attrs={'class': 'col-sm-2'}),
+    #     'odds_1_max': forms.NumberInput(attrs={'class': 'col-sm-2'}),
+    #     'odds_1_min_second': forms.NumberInput(attrs={'class': 'col-sm-2'}),
+    #     'odds_1_max_second': forms.NumberInput(attrs={'class': 'col-sm-2'}),
+    # }
