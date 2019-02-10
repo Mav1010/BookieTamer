@@ -139,9 +139,9 @@
             <div class="row">
                 <div class="col-sm-12">
                     {% if is_paginated %}
-                        <nav>
+                        <div class="col-lg-12 mt-3 d-flex">
                             {% if page_obj.has_other_pages %}
-                                <ul class="pagination">
+                                <ul class="pagination mx-auto">
                                     <!-- Previous page -->
                                     {% if page_obj.has_previous %}
                                         <li class="page-item"><a class="page-link" href="{{ request.get_full_path }}&page={{ page_obj.previous_page_number }}">«</a></li>
@@ -166,7 +166,7 @@
                                     {% endif %}
                                 </ul>
                             {% endif %}
-                        </nav>
+                        </div>
                     {% endif %}
                     <table class="table table-striped">
                         <thead>
