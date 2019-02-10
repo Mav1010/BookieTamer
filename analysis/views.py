@@ -1,7 +1,10 @@
-from django_filters.views import FilterView
+from django.db.models import Avg
 from django.shortcuts import render
 
+from django_filters.views import FilterView
+
 from analysis.filters import MatchFilter
+from analysis.utils import divide_without_errors, color_if_higher_lower
 from core import choices as choices_core
 from core.models import Match, Division, Team
 
@@ -17,57 +20,55 @@ class MatchList(FilterView):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
 
-        if self.request.GET.get('division'):
-            division_list =  self.request.GET.get('division')
-        else:
-            division_list = Division.objects.all()
+        # calculate statistics data
+        qs = self.object_list
+        num_games = len(qs)
 
-        if self.request.GET.get('home_team'):
-            home_team = self.request.GET.get('home_team')
-        else:
-            home_team = Team.objects.all()
+        # full time result percentages
+        home_win_count = qs.filter(ft_result=choices_core.HOME_WIN).count()
+        draw_count = qs.filter(ft_result=choices_core.DRAW).count()
+        away_win_count = qs.filter(ft_result=choices_core.AWAY_WIN).count()
 
-        if self.request.GET.get('away_team'):
-            away_team = self.request.GET.get('away_team')
-        else:
-            away_team = Team.objects.all()
+        home_win_percentage = divide_without_errors(home_win_count, num_games)
+        draw_percentage = divide_without_errors(draw_count, num_games)
+        away_win_percentage = divide_without_errors(away_win_count, num_games)
 
-        if self.request.GET.get('ft_result'):
-            ft_result = self.request.GET.get('ft_result')
+        context['home_win_percentage'] = home_win_percentage
+        context['draw_percentage'] = draw_percentage
+        context['away_win_percentage'] = away_win_percentage
 
-        if self.request.GET.get('ht_result'):
-            ht_result = self.request.GET.get('ht_result')
+        # avg. goals
+        avg_ft_home_goals = qs.all().aggregate(Avg('ft_home_goals'))['ft_home_goals__avg']
+        avg_ft_away_goals = qs.all().aggregate(Avg('ft_away_goals'))['ft_away_goals__avg']
 
-        base_filter = Match.objects.filter(division__in=division_list,
-                                           home_team__in=home_team,
-                                           away_team__in=away_team,
-                                           )
+        context['avg_ft_home_goals'] = avg_ft_home_goals
+        context['avg_ft_away_goals'] = avg_ft_away_goals
 
-        base_filter_count = base_filter.count()
+        # avg. odds
+        avg_home_odds = qs.all().aggregate(Avg('odds_home'))['odds_home__avg']
+        avg_draw_odds = qs.all().aggregate(Avg('odds_draw'))['odds_draw__avg']
+        avg_away_odds = qs.all().aggregate(Avg('odds_away'))['odds_away__avg']
 
-        home_wins = base_filter.filter(ft_result=choices_core.HOME_WIN).count()
-        away_wins = base_filter.filter(ft_result=choices_core.AWAY_WIN).count()
-        draws = base_filter.filter(ft_result=choices_core.DRAW).count()
+        context['avg_home_odds'] = avg_home_odds
+        context['avg_draw_odds'] = avg_draw_odds
+        context['avg_away_odds'] = avg_away_odds
 
-        context['division_list'] = division_list
-        context['home_team'] = home_team
-        context['away_team'] = away_team
-        context['base_filter_count'] = base_filter_count
+        bookie_probability_home = 1/ avg_home_odds
+        bookie_probability_draw = 1/ avg_draw_odds
+        bookie_probability_away = 1/ avg_away_odds
 
-        try:
-            context['home_wins_percentage'] = home_wins / base_filter_count
-        except:
-            context['home_wins_percentage'] = 0
+        context['bookie_probability_home'] = bookie_probability_home
+        context['bookie_probability_draw'] = bookie_probability_draw
+        context['bookie_probability_away'] = bookie_probability_away
 
-        try:
-            context['away_wins_percentage'] = away_wins / base_filter_count
-        except:
-            context['away_wins_percentage'] = 0
+        # color code for values
+        home_win_color = color_if_higher_lower(home_win_percentage, bookie_probability_home)
+        draw_color = color_if_higher_lower(draw_percentage, bookie_probability_draw)
+        away_win_color = color_if_higher_lower(away_win_percentage, bookie_probability_away)
 
-        try:
-            context['draws_percentage'] = draws / base_filter_count
-        except:
-            context['draws_percentage'] = 0
+        context['home_win_color'] = home_win_color
+        context['draw_color'] = draw_color
+        context['away_win_color'] = away_win_color
 
         return context
 
