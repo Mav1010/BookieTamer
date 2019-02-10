@@ -143,24 +143,36 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                {% if is_paginated %}
-                    {% if page_obj.has_other_pages %}
-                        <ul class="pagination">
-                        <!-- Previous page -->
-                        {% if page_obj.has_previous %}
-                            <li><a href="{{ request.get_full_path }}&page={{ page_obj.previous_page_number }}">Previous</a></li>
-                        {% else %}
-                            <li class="disabled"></li>
-                        {% endif %}
-                        <!-- Next page -->
-                        {% if page_obj.has_next %}
-                            <li><a href="{{ request.get_full_path }}&page={{ page_obj.next_page_number }}">Next</a></li>
-                        {% else %}
-                            <li class="disabled"></li>
-                        {% endif %}
-                        </ul>
+                    {% if is_paginated %}
+                        <nav>
+                            {% if page_obj.has_other_pages %}
+                                <ul class="pagination">
+                                    <!-- Previous page -->
+                                    {% if page_obj.has_previous %}
+                                        <li class="page-item"><a class="page-link" href="{{ request.get_full_path }}&page={{ page_obj.previous_page_number }}">«</a></li>
+                                    {% else %}
+                                        <li class="disabled"></li>
+                                    {% endif %}
+
+                                    <!-- Pagination -->
+                                    {% for i in paginator.page_range %}
+                                        {% if page_obj.number == i %}
+                                            <li class="page-item active"><a class="page-link">{{ i }}</a></li>
+                                        {% elif i > page_obj.number|add:'-4' and i < page_obj.number|add:'4' %}
+                                            <li class="page-item"><a class="page-link" href="{{ request.get_full_path }}&page={{ i }}">{{ i }}</a></li>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    <!-- Next page -->
+                                    {% if page_obj.has_next %}
+                                        <li class="page-item"><a class="page-link" href="{{ request.get_full_path }}&page={{ page_obj.next_page_number }}">»</a></li>
+                                    {% else %}
+                                        <li class="disabled"></li>
+                                    {% endif %}
+                                </ul>
+                            {% endif %}
+                        </nav>
                     {% endif %}
-                {% endif %}
                     <table class="table table-striped">
                         <thead>
                         <tr class="text-center">
