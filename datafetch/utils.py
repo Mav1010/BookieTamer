@@ -91,4 +91,5 @@ def get_fortuna_games():
                     games_to_book['Teams'].append(teams[:-3])
                     games_to_book['Betting reason'].append(coef_1)
                     games_to_book['X coef'].append("-")
+
     return pd.DataFrame(games_to_book)

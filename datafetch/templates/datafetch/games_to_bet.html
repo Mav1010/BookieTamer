@@ -11,12 +11,15 @@
                     <div class="col-sm-6">
                         <h1 class="h4 mt-1 font-weight-bold">Games to bet on</h1>
                     </div>
+                    <div class="col-sm-6 text-right">
+                        <button class="btn btn-outline-primary show-all">Show all</button>
+                    </div>
                 </div>
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12">
-                        {{ html_table| safe }}
+                        {{ html_table|safe }}
                     </div>
                 </div>
             </div>
@@ -26,7 +29,22 @@
     <script>
         $(document).ready(function(){
             $('.dataframe').addClass('table table-striped table-dark');
-            $('tr:first-child').css("text-align", "");
+            $(this).find('thead').find('tr').addClass('text-left');
+
+            var removeColumnName = "<th class='text-center'>Hide</i></th>";
+            $('thead').find('tr').append(removeColumnName);
+
+            var removeButton = "<td class='text-center text-success'><i class=\"fas fa-check mark-hide\" style='cursor: pointer;'></i></td>";
+            $('tbody').children('tr').append(removeButton);
+            $('.mark-hide').on('click', function () {
+                console.log('dsfd');
+                $(this).parents('tr').fadeOut();
+            });
+
+            $('.show-all').on('click', function () {
+                $('tbody').children().fadeIn();
+            });
+
         });
     </script>
 {% endblock %}
