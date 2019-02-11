@@ -78,7 +78,7 @@ def get_fortuna_games():
 
                 if (difference_x_range_min <= difference <= difference_x_range_max):
                     games_to_book['Match Day'].append(match_day)
-                    games_to_book['Teams'].append(teams[:-3])
+                    games_to_book['Teams'].append('{} - {}'.format(teams.split(" ")[0], teams.split(" ")[2]))
                     games_to_book['Betting reason'].append(difference)
                     games_to_book['X coef'].append(coef_x)
                 if (odds_1_min <= coef_1 <= odds_1_max):
@@ -91,6 +91,4 @@ def get_fortuna_games():
                     games_to_book['Teams'].append(teams[:-3])
                     games_to_book['Betting reason'].append(coef_1)
                     games_to_book['X coef'].append("-")
-
-
     return pd.DataFrame(games_to_book)
