@@ -53,9 +53,9 @@ class MatchList(FilterView):
         context['avg_draw_odds'] = avg_draw_odds
         context['avg_away_odds'] = avg_away_odds
 
-        bookie_probability_home = 1/ avg_home_odds
-        bookie_probability_draw = 1/ avg_draw_odds
-        bookie_probability_away = 1/ avg_away_odds
+        bookie_probability_home =  divide_without_errors(1, avg_home_odds)
+        bookie_probability_draw = divide_without_errors(1, avg_draw_odds)
+        bookie_probability_away = divide_without_errors(1, avg_away_odds)
 
         context['bookie_probability_home'] = bookie_probability_home
         context['bookie_probability_draw'] = bookie_probability_draw
