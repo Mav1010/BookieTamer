@@ -76,7 +76,7 @@ class MatchList(FilterView):
 def ajax_load_teams_by_division(request):
     division_id = request.GET.get('division_id')
     try:
-        division = Division.objects.get(name=division_id)
+        division = Division.objects.get(id=division_id)
         teams_qs = Team.objects.filter(division=division)
     except (Division.DoesNotExist, ValueError):
         division = Division.objects.all()

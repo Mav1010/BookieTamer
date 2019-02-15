@@ -123,10 +123,4 @@ FORTUNA_URL_LIGUE_1 = '1-francouzska-liga'
 FORTUNA_URL_PRIMERA_DIVISION = 'primera-division'
 FORTUNA_URL_BUNDESLIGA = 'bundesliga'
 
-"""Datafetch settings"""
-
-DIFFERENCE_RANGE_MIN_X = -0.090
-DIFFERENCE_RANGE_MAX_X = 0.090
-RATE_1_MIN = 1.38
-RATE_1_MAX = 1.48
-DATE_OFFSET = 7
+MATCH_HISTORY_DATA_PATH = 'C:\\Users\\Mac\\PycharmProjects\\BookieTamer\\'

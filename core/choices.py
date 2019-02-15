@@ -1,18 +1,18 @@
-HOME_WIN = 1
-DRAW = 2
-AWAY_WIN = 3
+HOME_WIN = 'H'
+DRAW = 'D'
+AWAY_WIN = 'A'
 
 RESULT = (
-    (HOME_WIN, '1'),
+    (HOME_WIN, 'H'),
     (DRAW, 'X'),
-    (AWAY_WIN, '2')
+    (AWAY_WIN, 'A')
 )
 
-SERIE_A = 1
-PREMIER_LEAGUE = 2
-BUNDESLIGA = 3
-LIGUE_1 = 4
-PRIMERA_DIVISION = 5
+SERIE_A = 'ITA-Serie A'
+PREMIER_LEAGUE = 'ENG-Premier League'
+BUNDESLIGA = 'GER-Bundesliga'
+LIGUE_1 = 'FRA-Ligue 1'
+PRIMERA_DIVISION = 'ESP-La Liga'
 
 LEAGUES = (
     (SERIE_A, 'Serie A'),
