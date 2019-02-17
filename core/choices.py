@@ -21,3 +21,8 @@ LEAGUES = (
     (LIGUE_1, 'Ligue 1'),
     (PRIMERA_DIVISION, 'Primera Division'),
 )
+
+YES = 1
+YES_FILTER = (
+    (YES, 'Yes'),
+)

@@ -100,11 +100,14 @@
                                             <p class="filter-title">Odds draw range</p>
                                             <div class="form-group">
                                                 <div class="row">
-                                                    <div class="col-sm-6">
+                                                    <div class="col-sm-4">
                                                          {{ filter.form.odds_draw_from|css_class:"form-control" }}
                                                     </div>
-                                                    <div class="col-sm-6">
+                                                    <div class="col-sm-4">
                                                          {{ filter.form.odds_draw_to|css_class:"form-control" }}
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                         {{ filter.form.show_matching_current_draw|css_class:"form-control" }}
                                                     </div>
                                                 </div>
                                             </div>

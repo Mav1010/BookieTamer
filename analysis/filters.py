@@ -2,8 +2,10 @@ import django_filters
 
 from django import forms
 
+from analysis.utils import get_real_h_a_odds_difference
 from core import choices as choices
 from core.models import Match, Team, Division
+from datafetch.models import DataFetchSettings
 
 
 class MatchFilter(django_filters.FilterSet):
@@ -63,6 +65,9 @@ class MatchFilter(django_filters.FilterSet):
                                                lookup_expr=('lte'))
 
 
+    show_matching_current_draw = django_filters.ChoiceFilter(choices=choices.YES_FILTER,
+                                                             method='look_by_matching_draw_settings')
+
     order_by = django_filters.OrderingFilter(
         fields=(
             ('date', 'date'),
@@ -74,8 +79,23 @@ class MatchFilter(django_filters.FilterSet):
 
     class Meta:
         model = Match
-        fields = ['division', 'home_team', 'away_team', 'ft_result', 'ht_result', 'start_date', 'end_date', 'ft_home_goals_from', 'ft_home_goals_to', 'ft_away_goals_from',
-                  'ft_away_goals_to', 'odds_home_from', 'odds_home_to','odds_draw_from', 'odds_draw_to', 'odds_away_from', 'odds_away_to']
+        fields = ['division',
+                  'home_team',
+                  'away_team',
+                  'ft_result',
+                  'ht_result',
+                  'start_date',
+                  'end_date',
+                  'ft_home_goals_from',
+                  'ft_home_goals_to',
+                  'ft_away_goals_from',
+                  'ft_away_goals_to',
+                  'odds_home_from',
+                  'odds_home_to',
+                  'odds_draw_from',
+                  'odds_draw_to',
+                  'odds_away_from',
+                  'odds_away_to']
 
 
     def look_by_home_team(self, queryset, name, value):
@@ -84,5 +104,19 @@ class MatchFilter(django_filters.FilterSet):
 
     def look_by_away_team(self, queryset, name, value):
         qs = queryset.filter(away_team=name)
+        return qs
+
+    def look_by_matching_draw_settings(self, queryset, name, value):
+
+        datafetch_settings = DataFetchSettings.objects.get(pk=1)
+
+        qs = queryset
+        wanted = []
+        for game in qs:
+            difference = get_real_h_a_odds_difference(game.odds_home, game.odds_draw, game.odds_away, datafetch_settings)
+            if difference:
+                wanted.append(game.pk)
+
+        qs = qs.filter(pk__in=wanted)
         return qs
 
