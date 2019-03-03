@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'core',
     'analysis',
     'datafetch',
+    'bet'
 ]
 
 MIDDLEWARE = [

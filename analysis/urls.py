@@ -1,6 +1,6 @@
 from django.urls import path
 
-from analysis import views
+from . import views
 
 
 app_name = 'analysis'

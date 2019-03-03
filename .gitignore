@@ -50,9 +50,4 @@ docs/_build/
 
 .idea/workspace.xml
 
-analysis/__pycache__/__init__.cpython-36.pyc
-analysis/__pycache__/__init__.cpython-36.pyc
-analysis/__pycache__/__init__.cpython-36.pyc
-analysis/migrations/__pycache__/__init__.cpython-36.pyc
-analysis/__pycache__/__init__.cpython-36.pyc
-analysis/migrations/__pycache__/__init__.cpython-36.pyc
+.vscode/settings.json
