@@ -119,6 +119,10 @@ STATIC_URL = '/static/'
 
 SHELL_PLUS = "ipython"
 
+LOGIN_REDIRECT_URL = 'core:home'
+LOGOUT_REDIRECT_URL = 'core:home'
+
+
 """Base urls to scrap data from"""
 
 BASE_FORTUNA_URL= 'https://www.ifortuna.cz/cz/sazeni/fotbal/'

@@ -5,8 +5,7 @@
 {% endblock title %}
 
 {% block body %}
+<div class="container text-white">
+    Hello {% if user.is_authenticated %}{{ user.get_username }}{% else %}visitor{% endif %}!
+</div>
 {% endblock %}
-
-
-
-    

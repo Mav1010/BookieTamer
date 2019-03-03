@@ -12,4 +12,5 @@ urlpatterns = [
 
     # in order to go to home if blank address
     path('', RedirectView.as_view(url='home')),
+
 ]
