@@ -11,10 +11,13 @@ analysis/__pycache__/admin.cpython-36.pyc
 analysis/__pycache__/models.cpython-36.pyc
 analysis/__pycache__/urls.cpython-36.pyc
 analysis/__pycache__/views.cpython-36.pyc
+analysis/__pycache__/__init__.cpython-36.pyc
 analysis/migrations/__pycache__/0001_match_model.cpython-36.pyc
 analysis/migrations/__pycache__/0002_corrected_models.cpython-36.pyc
+analysis/migrations/__pycache__/__init__.cpython-36.pyc
 
 *.py[cod]
+*.pyc
 
 # Distribution / packaging
 bin/
@@ -62,3 +65,7 @@ docs/_build/
 
 .idea/workspace.xml
 
+analysis/__pycache__/__init__.cpython-36.pyc
+analysis/__pycache__/__init__.cpython-36.pyc
+analysis/__pycache__/__init__.cpython-36.pyc
+analysis/migrations/__pycache__/__init__.cpython-36.pyc
