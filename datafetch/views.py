@@ -9,7 +9,6 @@ from datafetch.utils import get_fortuna_games
 
 @login_required
 def games_to_bet_list(request):
-
     df = get_fortuna_games()
     html_table = df.sort_values(by=['Match Day', 'X coef']).to_html(index=False)
 
