@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Avg
 from django.shortcuts import render
 
@@ -9,7 +11,7 @@ from core import choices as choices_core
 from core.models import Match, Division, Team
 
 
-class MatchList(FilterView):
+class MatchList(LoginRequiredMixin, FilterView):
     model = Match
     context_object_name = 'match'
     template_name = 'analysis/data.html'

@@ -1,0 +1,8 @@
+<div class="container text-white">
+    <h2 class="text-white">{{ title }}</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">{{ button }}</button>
+    </form>
+</div>

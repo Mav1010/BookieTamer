@@ -48,7 +48,7 @@ ROOT_URLCONF = 'BookieTamer.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['core/templates/',],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -119,8 +119,8 @@ STATIC_URL = '/static/'
 
 SHELL_PLUS = "ipython"
 
-LOGIN_REDIRECT_URL = 'core:home'
-LOGOUT_REDIRECT_URL = 'core:home'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
 
 
 """Base urls to scrap data from"""
