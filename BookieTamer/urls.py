@@ -9,7 +9,8 @@ urlpatterns = [
     path('', include('analysis.urls')),
     path('', include('datafetch.urls')),
     path('', include('bet.urls')),
-
+    path('', include('users.urls')),
+    
     # in order to go to home if blank address
     path('', RedirectView.as_view(url='home')),
 

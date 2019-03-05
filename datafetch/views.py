@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, render
 from django.views.generic import UpdateView, CreateView
 
 from datafetch.models import DataFetchSettings
@@ -12,7 +12,12 @@ def games_to_bet_list(request):
     df = get_fortuna_games()
     html_table = df.sort_values(by=['Match Day', 'X coef']).to_html(index=False)
 
-    return render_to_response('datafetch/games_to_bet.html', {'html_table': html_table})
+    context = {
+        'html_table': html_table,
+    }
+    print(request.user.is_authenticated)
+
+    return render(request, 'datafetch/games_to_bet.html', context)
 
 
 class DataFetchSettingsCreateView(LoginRequiredMixin, CreateView):

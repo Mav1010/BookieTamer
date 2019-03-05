@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'users.apps.UsersConfig',
     'django_extensions',
     'django_filters',
     'core',
@@ -33,6 +34,8 @@ INSTALLED_APPS = [
     'bet',
     'crispy_forms',
 ]
+
+AUTH_USER_MODEL = 'users.CustomUser' 
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -51,7 +54,7 @@ ROOT_URLCONF = 'BookieTamer.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['core/templates/',],
+        'DIRS': ['users/templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
