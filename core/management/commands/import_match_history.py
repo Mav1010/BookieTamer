@@ -20,7 +20,7 @@ def put_files_together():
         for file in all_files:
             with open('{}{}'.format(entry_path, file)) as league_file:
                 header = next(league_file)
-                if not header_saved:
+                if not header_saved:    
                     complete_file.write(header)
                     header_saved = True
                 for line in league_file:

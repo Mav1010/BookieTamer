@@ -138,4 +138,4 @@ FORTUNA_URL_LIGUE_1 = '1-francouzska-liga'
 FORTUNA_URL_PRIMERA_DIVISION = 'primera-division'
 FORTUNA_URL_BUNDESLIGA = 'bundesliga'
 
-MATCH_HISTORY_DATA_PATH = 'C:\\Users\\Mac\\PycharmProjects\\BookieTamer\\'
+MATCH_HISTORY_DATA_PATH = '/home/maciek/DjangoProjects/BookieTamer/'
