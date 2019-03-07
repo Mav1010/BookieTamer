@@ -15,7 +15,6 @@ def games_to_bet_list(request):
     context = {
         'html_table': html_table,
     }
-    print(request.user.is_authenticated)
 
     return render(request, 'datafetch/games_to_bet.html', context)
 

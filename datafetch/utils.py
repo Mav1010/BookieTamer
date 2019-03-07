@@ -26,7 +26,7 @@ def get_fortuna_games():
 
     all_leagues = [settings.FORTUNA_URL_SERIE_A, settings.FORTUNA_URL_PREMIER_LEAGUE, settings.FORTUNA_URL_LIGUE_1,
                    settings.FORTUNA_URL_PRIMERA_DIVISION, settings.FORTUNA_URL_BUNDESLIGA]
-
+    
     current_year = date.today().year
 
     datafetch_settings = DataFetchSettings.objects.get(pk=1)
@@ -50,7 +50,7 @@ def get_fortuna_games():
     for league in all_leagues:
         current_games = pd.read_html(settings.BASE_FORTUNA_URL + league)[2]
         try:
-            games = pd.DataFrame(current_games[['zápas', '1', '0', '2', 'datum']])
+            games = pd.DataFrame(current_games[['Zápas', '1', '0', '2', 'datum']])
         except KeyError:
             continue
         #renaming columns for easier use
