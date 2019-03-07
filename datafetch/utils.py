@@ -50,7 +50,8 @@ def get_fortuna_games():
     for league in all_leagues:
         current_games = pd.read_html(settings.BASE_FORTUNA_URL + league)[2]
         try:
-            games = pd.DataFrame(current_games[['Zápas', '1', '0', '2', 'datum']])
+            #get columns of the dataframe by the location of columns, instead of using names (like Zapas, datum etc.)
+            games = pd.DataFrame(current_games.iloc[:, [0, 1, 2, 3, 8]]) 
         except KeyError:
             continue
         #renaming columns for easier use
