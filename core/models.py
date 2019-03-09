@@ -50,7 +50,8 @@ class Team(BaseModel):
 
 
 class Division(BaseModel):
-    name = models.CharField(max_length=50, choices=choices_core.LEAGUES, blank=False)
+    name = models.CharField(max_length=50, blank=False)
+    fortuna_url = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return str(self.name)

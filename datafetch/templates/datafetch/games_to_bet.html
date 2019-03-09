@@ -1,7 +1,9 @@
 {% extends 'core/base.html' %}
 {% load core_extras %}
 
-{% block title %}Games to bet{% endblock %}
+{% block title %}
+    Games to bet
+{% endblock title %}
 
 {% block body %}
 
@@ -10,11 +12,15 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h1 class="h4 mt-1 font-weight-bold">Games to bet on</h1>
+                        {% if no_settings %}
+                            <h1 class="h4 mt-1 font-weight-bold">Go to settings and select criteria for the games</h1>
+                        {% else %}
+                            <h1 class="h4 mt-1 font-weight-bold">Games to bet on</h1>
                     </div>
                     <div class="col-sm-6 text-right">
                         <button class="btn btn-outline-primary show-all">Show all</button>
                     </div>
+                     {% endif %}
                 </div>
             </div>
             <div class="card-body">

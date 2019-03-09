@@ -10,13 +10,19 @@ from datafetch.utils import get_fortuna_games
 
 @login_required
 def games_to_bet_list(request):
-    df = get_fortuna_games()
-    html_table = df.sort_values(by=['Match Day', 'X coef']).to_html(index=False)
+    try:
+        fetch_settings = DataFetchSettings.objects.get(user=request.user)
+        df = get_fortuna_games(fetch_settings)
+        html_table = df.sort_values(by=['Match Day', 'X coef']).to_html(index=False)
 
-    context = {
-        'html_table': html_table,
-    }
-
+        context = {
+            'html_table': html_table,
+        }
+    except DataFetchSettings.DoesNotExist:
+        no_settings = True
+        context = {
+            'no_settings': no_settings,
+        }
     return render(request, 'datafetch/games_to_bet.html', context)
 
 
@@ -37,8 +43,18 @@ class DataFetchSettingsCreateView(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return super(DataFetchSettingsCreateView, self).form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super(DataFetchSettingsCreateView, self).get_context_data(**kwargs)
+        context.update({'title': 'Settings'})
+        return context
+
 
 class DataFetchSettingsUpdateView(LoginRequiredMixin, UpdateView):
     model = DataFetchSettings
     template_name = 'core/base_add_update.html'
     form_class = DataFetchSettingsForm
+
+    def get_context_data(self, **kwargs):
+        context = super(DataFetchSettingsUpdateView, self).get_context_data(**kwargs)
+        context.update({'title': 'Settings'})
+        return context

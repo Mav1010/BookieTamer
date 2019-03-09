@@ -3,8 +3,6 @@ import pandas as pd
 from datetime import timedelta, date, datetime
 import BookieTamer.settings as settings
 
-from datafetch.models import DataFetchSettings
-
 
 def bookie_probability_real(x1, xX, x2):
     bookie_probabilty_normal = (1 / x1) + (1 / xX) + (1 / x2)
@@ -18,21 +16,21 @@ def bookie_probability_real(x1, xX, x2):
     return context
 
 
-def get_fortuna_games():
-    leagues = [settings.FORTUNA_URL_SERIE_A, settings.FORTUNA_URL_PREMIER_LEAGUE, settings.FORTUNA_URL_LIGUE_1,
-                settings.FORTUNA_URL_PRIMERA_DIVISION, settings.FORTUNA_URL_BUNDESLIGA]
+def get_fortuna_games(fetch_settings):
+    # leagues = [settings.FORTUNA_URL_SERIE_A, settings.FORTUNA_URL_PREMIER_LEAGUE, settings.FORTUNA_URL_LIGUE_1,
+    #             settings.FORTUNA_URL_PRIMERA_DIVISION, settings.FORTUNA_URL_BUNDESLIGA]
     
     current_year = date.today().year
 
-    datafetch_settings = DataFetchSettings.objects.get(pk=1)
+    difference_x_range_min = fetch_settings.difference_x_range_min
+    difference_x_range_max = fetch_settings.difference_x_range_max
+    odds_1_min = fetch_settings.odds_1_min
+    odds_1_max = fetch_settings.odds_1_max
+    date_offset = fetch_settings.date_offset
+    odds_1_min_second = fetch_settings.odds_1_min_second
+    odds_1_max_second = fetch_settings.odds_1_max_second
 
-    difference_x_range_min = datafetch_settings.difference_x_range_min
-    difference_x_range_max = datafetch_settings.difference_x_range_max
-    odds_1_min = datafetch_settings.odds_1_min
-    odds_1_max = datafetch_settings.odds_1_max
-    date_offset = datafetch_settings.date_offset
-    odds_1_min_second = datafetch_settings.odds_1_min_second
-    odds_1_max_second = datafetch_settings.odds_1_max_second
+    leagues = fetch_settings.leagues
 
     date_limit = datetime.today() + timedelta(date_offset)
 
