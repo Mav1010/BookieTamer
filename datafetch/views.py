@@ -1,10 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render_to_response, render
+from django.shortcuts import render_to_response, render, reverse
 from django.views.generic import UpdateView, CreateView
 
+from datafetch.forms import DataFetchSettingsForm
 from datafetch.models import DataFetchSettings
 from datafetch.utils import get_fortuna_games
+
+from users.models import CustomUser
 
 
 @login_required
@@ -21,27 +24,23 @@ def games_to_bet_list(request):
 
 class DataFetchSettingsCreateView(LoginRequiredMixin, CreateView):
     model = DataFetchSettings
-    fields = ['date_offset',
-              'difference_x_range_min',
-              'difference_x_range_max',
-              'odds_1_min',
-              'odds_1_max',
-              'odds_1_min_second',
-              'odds_1_max_second',
-              ]
     template_name = 'datafetch/settings_form.html'
-    success_url = '/settings/1'
+    form_class = DataFetchSettingsForm
+
+    def get_initial(self):
+        inital = {
+            'user': self.request.user
+        }
+        return inital
 
 
 class DataFetchSettingsUpdateView(LoginRequiredMixin, UpdateView):
     model = DataFetchSettings
-    fields = ['date_offset',
-              'difference_x_range_min',
-              'difference_x_range_max',
-              'odds_1_min',
-              'odds_1_max',
-              'odds_1_min_second',
-              'odds_1_max_second',
-              ]
     template_name = 'datafetch/settings_form.html'
-    success_url = '/settings/1'
+    form_class = DataFetchSettingsForm
+
+    def get_initial(self):
+        inital = {
+            'user': self.request.user
+        }
+        return inital

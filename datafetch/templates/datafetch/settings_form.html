@@ -21,7 +21,7 @@
                                 {% csrf_token %}
                                 {% for field in form %}
                                     <div class="col-sm-2">
-                                        {{ field.label }}: {{ field| safe }}
+                                        {{ field.label }} {{ field| safe }}
                                     </div>
                                 {% endfor %}
                                 <input class="btn btn-primary mt-5" type="submit" value="Save">
