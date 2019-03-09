@@ -1,0 +1,31 @@
+{% include 'core/snippets/messages_and_form_errors.html' %}
+
+<form action="" method="post" autocomplete="off">
+{% csrf_token %}
+    {% if form.fieldsets %}
+        {% for fieldset in form.fieldsets %}
+            {{ fieldset.title }}
+
+
+            {% for field in form %}
+                {% if field.name in fieldset.fields %}
+                    {{ field.label_tag }}
+                    {{ field }}
+                {% endif %}
+            {% endfor %}
+
+        {% endfor %}
+
+    {% else %}
+         {% for field in form %}
+            {{ field.label_tag }}
+            {{ field }}
+        {% endfor %}
+
+    {% endif %}
+    <div class="row">
+        <div class="col-lg-12">
+            <button type="submit" name="stay_current_page" class="btn btn-success">Save</button>
+        </div>
+    </div>
+</form>
