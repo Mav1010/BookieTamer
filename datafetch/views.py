@@ -1,13 +1,12 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render_to_response, render, reverse
+from django.shortcuts import render, redirect
 from django.views.generic import UpdateView, CreateView
 
 from datafetch.forms import DataFetchSettingsForm
 from datafetch.models import DataFetchSettings
 from datafetch.utils import get_fortuna_games
 
-from users.models import CustomUser
 
 
 @login_required
@@ -27,20 +26,21 @@ class DataFetchSettingsCreateView(LoginRequiredMixin, CreateView):
     template_name = 'datafetch/settings_form.html'
     form_class = DataFetchSettingsForm
 
-    def get_initial(self):
-        inital = {
-            'user': self.request.user
-        }
-        return inital
+    def dispatch(self, request, *args, **kwargs):
+        try:
+            settings = DataFetchSettings.objects.get(user=self.request.user)
+            return redirect('datafetch:datafetch_settings', settings.pk)
+        except DataFetchSettings.DoesNotExist:
+            pass
+        return super(DataFetchSettingsCreateView, self).dispatch(request, *args, **kwargs)
+
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(DataFetchSettingsCreateView, self).form_valid(form)
 
 
 class DataFetchSettingsUpdateView(LoginRequiredMixin, UpdateView):
     model = DataFetchSettings
     template_name = 'datafetch/settings_form.html'
     form_class = DataFetchSettingsForm
-
-    def get_initial(self):
-        inital = {
-            'user': self.request.user
-        }
-        return inital
