@@ -5,27 +5,22 @@ import BookieTamer.settings as settings
 
 from datafetch.models import DataFetchSettings
 
+
 def bookie_probability_real(x1, xX, x2):
-
-    bookie_rate_1 = x1
-    bookie_rate_X = xX
-    bookie_rate_2 = x2
-
-    bookie_probabilty_normal = (1 / bookie_rate_1) + (1 / bookie_rate_X) + (1 / bookie_rate_2)
+    bookie_probabilty_normal = (1 / x1) + (1 / xX) + (1 / x2)
 
     context = {
         'bookie_probabilty_normal': bookie_probabilty_normal,
-        'bookie_probabilty_real_1': round((1 / bookie_rate_1) / bookie_probabilty_normal, 3),
-        'bookie_probabilty_real_2': round((1 / bookie_rate_2) / bookie_probabilty_normal, 3),
-        'bookie_probabilty_real_X': round((1 / bookie_rate_X) / bookie_probabilty_normal, 3),
+        'bookie_probabilty_real_1': round((1 / x1) / bookie_probabilty_normal, 3),
+        'bookie_probabilty_real_2': round((1 / x2) / bookie_probabilty_normal, 3),
+        'bookie_probabilty_real_X': round((1 / xX) / bookie_probabilty_normal, 3),
     }
-
     return context
 
-def get_fortuna_games():
 
-    all_leagues = [settings.FORTUNA_URL_SERIE_A, settings.FORTUNA_URL_PREMIER_LEAGUE, settings.FORTUNA_URL_LIGUE_1,
-                   settings.FORTUNA_URL_PRIMERA_DIVISION, settings.FORTUNA_URL_BUNDESLIGA]
+def get_fortuna_games():
+    leagues = [settings.FORTUNA_URL_SERIE_A, settings.FORTUNA_URL_PREMIER_LEAGUE, settings.FORTUNA_URL_LIGUE_1,
+                settings.FORTUNA_URL_PRIMERA_DIVISION, settings.FORTUNA_URL_BUNDESLIGA]
     
     current_year = date.today().year
 
@@ -47,7 +42,7 @@ def get_fortuna_games():
                      'X coef': [],
                      }
 
-    for league in all_leagues:
+    for league in leagues:
         current_games = pd.read_html(settings.BASE_FORTUNA_URL + league)[2]
         try:
             #get columns of the dataframe by the location of columns, instead of using names (like Zapas, datum etc.)
@@ -95,5 +90,4 @@ def get_fortuna_games():
                     games_to_book['Teams'].append(teams[:-3])
                     games_to_book['Betting reason'].append(coef_1)
                     games_to_book['X coef'].append("-")
-
     return pd.DataFrame(games_to_book)

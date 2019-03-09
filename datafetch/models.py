@@ -1,8 +1,10 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 
+from core.models import BaseModel
 
-class DataFetchSettings(models.Model):
+
+class DataFetchSettings(BaseModel):
 
     difference_x_range_min = models.FloatField(default=0,null=False)
     difference_x_range_max = models.FloatField(default=0,null=False)

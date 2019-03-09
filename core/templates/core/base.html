@@ -17,11 +17,11 @@
 
 {% load static %}
 
-    <body class="bg-dark">
+<body class="bg-dark">
 
     <!-- Navbar -->
     {% block navbar %}
-        {% include 'core/snippets/header_navbar.html' %}
+    {% include 'core/snippets/header_navbar.html' %}
     {% endblock %}
 
     <div class="main-body py-3">
@@ -42,11 +42,7 @@
 
     <!-- Enabling tooltips -->
     <script type="text/javascript">
-        $(function() {
+        $(function () {
             $('[data-toggle="tooltip"]').tooltip()
         })
     </script>
-
-
-
-

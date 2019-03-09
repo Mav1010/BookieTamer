@@ -48,6 +48,9 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
-.idea/workspace.xml
-
+# IDE files
+.idea/
+.idea/
+.idea/
+.idea/
 .vscode/settings.json

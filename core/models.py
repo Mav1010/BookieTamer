@@ -3,7 +3,16 @@ from django.db import models
 import core.choices as choices_core
 
 
-class BaseMatch(models.Model):
+""" base model for all models in the application """
+class BaseModel(models.Model):
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_changed = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+
+class BaseMatch(BaseModel):
     date = models.DateField(null=True)
     ft_result = models.CharField(max_length=1, choices=choices_core.RESULT, blank=False)
     odds_home = models.FloatField(null=True)
@@ -32,7 +41,7 @@ class Match(BaseMatch):
         return '{} - {} on {}'.format(self.home_team, self.away_team, self.date)
 
 
-class Team(models.Model):
+class Team(BaseModel):
     name = models.CharField(max_length=100, blank=True)
     division = models.ForeignKey('core.Division', on_delete=models.SET_NULL, null=True)
 
@@ -40,7 +49,7 @@ class Team(models.Model):
         return str(self.name)
 
 
-class Division(models.Model):
+class Division(BaseModel):
     name = models.CharField(max_length=50, choices=choices_core.LEAGUES, blank=False)
 
     def __str__(self):
