@@ -5,7 +5,6 @@ from core.models import BaseModel
 
 
 class DataFetchSettings(BaseModel):
-
     difference_x_range_min = models.FloatField(default=0,null=False)
     difference_x_range_max = models.FloatField(default=0,null=False)
     odds_1_min = models.FloatField(default=0, null=False)
@@ -14,8 +13,10 @@ class DataFetchSettings(BaseModel):
     odds_1_min_second = models.FloatField(default=0, null=False)
     odds_1_max_second = models.FloatField(default=0, null=False)
 
-    def save(self, *args, **kwargs):
-        if DataFetchSettings.objects.exists() and not self.pk:
-            raise ValidationError('You cannot have multiple settings')
+    user = models.OneToOneField('users.CustomUser', related_name='user_settings', on_delete=models.CASCADE)
 
-        return super(DataFetchSettings, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     if DataFetchSettings.objects.filter().exists():
+    #         raise ValidationError('You cannot have multiple settings')
+    #
+    #     return super(DataFetchSettings, self).save(*args,1 **kwargs)
