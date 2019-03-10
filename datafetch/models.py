@@ -14,7 +14,7 @@ class DataFetchSettings(BaseModel):
     odds_1_max_second = models.FloatField(default=0, null=False)
 
     user = models.OneToOneField('users.CustomUser', related_name='user_settings', on_delete=models.CASCADE)
-    leagues = models.ManyToManyField('core.Division', related_name='leagues')
+    leagues = models.ManyToManyField('core.Division', related_name='leagues', blank=True)
 
     def get_absolute_url(self):
         return reverse('datafetch:datafetch_settings', kwargs={'pk': self.pk })

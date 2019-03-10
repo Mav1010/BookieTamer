@@ -7,6 +7,7 @@ from core.forms import BootstrapStylingBaseForm
 class DataFetchSettingsForm(BootstrapStylingBaseForm, forms.ModelForm):
     field_cols = {
         'date_offset': 2,
+        'leagues': 8,
         'difference_x_range_min': 6,
         'difference_x_range_max': 6,
         'odds_1_min': 6,
@@ -18,10 +19,10 @@ class DataFetchSettingsForm(BootstrapStylingBaseForm, forms.ModelForm):
 
     fieldsets = (
         {
-            'title': 'Time frame',
+            'title': 'Time frame and Leagues',
             'icon': '',
             'icon_color': '',
-            'fields': ('date_offset')
+            'fields': ('date_offset', 'leagues')
         },
         {
             'title': 'Odds settings',
@@ -35,3 +36,7 @@ class DataFetchSettingsForm(BootstrapStylingBaseForm, forms.ModelForm):
     class Meta:
         model = DataFetchSettings
         exclude = ('user',)
+
+    def __init__(self, *args, **kwargs):
+        super(DataFetchSettingsForm, self).__init__(*args, **kwargs)
+        self.fields['leagues'].widget.attrs.update({'class': 'js-multiple-select2', 'style': 'width: 100%'})
