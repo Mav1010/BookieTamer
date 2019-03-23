@@ -108,7 +108,7 @@ class MatchFilter(django_filters.FilterSet):
 
     def look_by_matching_draw_settings(self, queryset, name, value):
 
-        datafetch_settings = DataFetchSettings.objects.get(pk=1)
+        datafetch_settings = DataFetchSettings.objects.get(user=self.request.user)
 
         qs = queryset
         wanted = []

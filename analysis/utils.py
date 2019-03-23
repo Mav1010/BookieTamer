@@ -18,7 +18,7 @@ def color_if_higher_lower(value1, value2):
 
 def get_real_h_a_odds_difference(odds_home, odds_draw, odds_away, datafetch_settings):
     """
-    :return: True if game is withing the difference range
+    :return: True if game is within the difference range
     """
 
     coef_probability = bookie_probability_real(odds_home, odds_draw, odds_away)

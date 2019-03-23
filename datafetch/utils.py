@@ -38,7 +38,7 @@ def get_fortuna_games(fetch_settings):
                      }
 
     for league in leagues.all():
-        current_games = pd.read_html(settings.BASE_FORTUNA_URL + league.fortuna_url)[2]
+        current_games = pd.read_html(settings.BASE_FORTUNA_URL + league.fortuna_url)[1]
         try:
             #get columns of the dataframe by the location of columns, instead of using names (like Zapas, datum etc.)
             games = pd.DataFrame(current_games.iloc[:, [0, 1, 2, 3, 8]]) 
@@ -57,6 +57,7 @@ def get_fortuna_games(fetch_settings):
                     match_day = None
                     continue
             else:
+
                 match_day = None
 
             if (not row.isnull().any()) and (match_day <= date_limit):
