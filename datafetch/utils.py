@@ -19,13 +19,14 @@ def bookie_probability_real(x1, xX, x2):
 def get_fortuna_games(fetch_settings):
     current_year = date.today().year
 
+    name = fetch_settings.name
     difference_x_range_min = fetch_settings.difference_x_range_min
     difference_x_range_max = fetch_settings.difference_x_range_max
     odds_1_min = fetch_settings.odds_1_min
     odds_1_max = fetch_settings.odds_1_max
     date_offset = fetch_settings.date_offset
-    odds_1_min_second = fetch_settings.odds_1_min_second
-    odds_1_max_second = fetch_settings.odds_1_max_second
+    odds_2_min = fetch_settings.odds_2_min
+    odds_2_max = fetch_settings.odds_2_max
 
     leagues = fetch_settings.leagues
 
@@ -77,11 +78,6 @@ def get_fortuna_games(fetch_settings):
                     games_to_book['Betting reason'].append(difference)
                     games_to_book['X coef'].append(coef_x)
                 if (odds_1_min <= coef_1 <= odds_1_max):
-                    games_to_book['Match Day'].append(match_day)
-                    games_to_book['Teams'].append(teams[:-3])
-                    games_to_book['Betting reason'].append(coef_1)
-                    games_to_book['X coef'].append("-")
-                if (odds_1_min_second <= coef_1 <= odds_1_max_second):
                     games_to_book['Match Day'].append(match_day)
                     games_to_book['Teams'].append(teams[:-3])
                     games_to_book['Betting reason'].append(coef_1)

@@ -1,6 +1,8 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect, Http404
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.views.generic import UpdateView, CreateView, ListView
 
 from datafetch.forms import DataFetchSettingsForm
@@ -61,6 +63,7 @@ class DataFetchSettingsCreate(LoginRequiredMixin, CreateView):
     model = DataFetchSettings
     template_name = 'core/base_add_update.html'
     form_class = DataFetchSettingsForm
+    success_url = reverse_lazy('datafetch:datafetch_settings_list')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -81,3 +84,19 @@ class DataFetchSettingsUpdate(LoginRequiredMixin, UpdateView):
         context = super(DataFetchSettingsUpdate, self).get_context_data(**kwargs)
         context.update({'title': 'Settings'})
         return context
+
+
+def datafetch_settings_delete(request, pk):
+    try:
+        settings = DataFetchSettings.objects.get(id=pk)
+    except DataFetchSettings.DoesNotExist:
+        message = 'No Setting found'
+
+        messages.add_message(request, messages.WARNING, message)
+        return redirect('datafetch:datafetch_settings_list')
+
+    settings.delete()
+    message = 'Settings \'{}\' successfully deleted'.format(settings.name)
+
+    messages.add_message(request, messages.SUCCESS, message)
+    return redirect('datafetch:datafetch_settings_list')

@@ -10,4 +10,5 @@ urlpatterns = [
     path('settings/create/', views.DataFetchSettingsCreate.as_view(), name="datafetch_settings_create"),
     path('settings/all/', views.DataFetchSettingsList.as_view(), name="datafetch_settings_list"),
     path('settings/<int:pk>', views.DataFetchSettingsUpdate.as_view(), name="datafetch_settings_update"),
+    path('settings/<int:pk>/delete/', views.datafetch_settings_delete, name="datafetch_settings_delete"),
 ]

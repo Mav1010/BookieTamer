@@ -28,19 +28,21 @@
                 <div class="row">
                     <div class="col-sm-12">
 
+                    {% include 'core/snippets/messages_and_form_errors.html' %}
 
                     <table class="table table-striped">
                         <thead>
                         <tr class="text-center">
                             <th>Name</th>
                             <th>Leagues</th>
-                            <th>X min difference</th>
-                            <th>X max difference</th>
-                            <th>1 min odds</th>
-                            <th>1 max odds</th>
-                            <th>2 min odds</th>
-                            <th>2 max odds</th>
+                            <th>X min</th>
+                            <th>X max</th>
+                            <th>1 min</th>
+                            <th>1 max</th>
+                            <th>2 min</th>
+                            <th>2 max</th>
                             <th>Days offset</th>
+                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -50,7 +52,9 @@
                                     {{ setting.name }}
                                 </td>
                                 <td class="thin">
-                                    {{ setting.leagues }}
+                                    {% for league in setting.leagues.all %}
+                                    {{ league }}</br>
+                                    {% endfor %}
                                 </td>
                                 <td class="thin">
                                     {{ setting.difference_x_range_min }}
@@ -71,7 +75,15 @@
                                     {{ setting.odds_2_max }}
                                 </td>
                                 <td class="thin">
-                                    {{ setting.date_offset}}
+                                    {{ setting.date_offset }}
+                                </td>
+                                <td class="thin">
+                                    <a href="{% url 'datafetch:datafetch_settings_update' setting.pk %}">
+                                        <i class="far fa-edit"></i>
+                                    </a>
+                                    <a href="{% url 'datafetch:datafetch_settings_delete' setting.pk %}">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -87,4 +99,3 @@
 
     </script>
 {% endblock %}
-
