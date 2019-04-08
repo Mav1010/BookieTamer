@@ -54,3 +54,8 @@ docs/_build/
 .idea/
 .idea/
 .vscode/settings.json
+
+.ipynb_checkpoints/
+*.ipynb
+*.csv
+

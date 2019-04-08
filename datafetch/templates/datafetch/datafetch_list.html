@@ -1,0 +1,90 @@
+{% extends 'core/base.html' %}
+{% load core_extras %}
+
+{% block title %}
+    Games to bet
+{% endblock title %}
+
+{% block body %}
+
+     <div class="col-sm-12 py-4">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1 class="h4 mt-1 font-weight-bold">Your settings</h1>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <a href="{% url 'datafetch:datafetch_settings_create' %}">
+                            <button class="btn btn-outline-primary show-all">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                Add settings
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12">
+
+
+                    <table class="table table-striped">
+                        <thead>
+                        <tr class="text-center">
+                            <th>Name</th>
+                            <th>Leagues</th>
+                            <th>X min difference</th>
+                            <th>X max difference</th>
+                            <th>1 min odds</th>
+                            <th>1 max odds</th>
+                            <th>2 min odds</th>
+                            <th>2 max odds</th>
+                            <th>Days offset</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for setting in settings.all %}
+                            <tr class="text-center">
+                                <td class="thin">
+                                    {{ setting.name }}
+                                </td>
+                                <td class="thin">
+                                    {{ setting.leagues }}
+                                </td>
+                                <td class="thin">
+                                    {{ setting.difference_x_range_min }}
+                                </td>
+                                <td class="thin">
+                                    {{ setting.difference_x_range_max }}
+                                </td>
+                                <td class="thin">
+                                    {{ setting.odds_1_min }}
+                                </td>
+                                <td class="thin">
+                                    {{ setting.odds_1_max }}
+                                </td>
+                                <td class="thin">
+                                    {{ setting.odds_2_min }}
+                                </td>
+                                <td class="thin">
+                                    {{ setting.odds_2_max }}
+                                </td>
+                                <td class="thin">
+                                    {{ setting.date_offset}}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
+
+    <script>
+
+    </script>
+{% endblock %}
+

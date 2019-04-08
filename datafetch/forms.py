@@ -12,8 +12,9 @@ class DataFetchSettingsForm(BootstrapStylingBaseForm, forms.ModelForm):
         'difference_x_range_max': 6,
         'odds_1_min': 6,
         'odds_1_max': 6,
-        'odds_1_min_second': 6,
-        'odds_1_max_second': 6,
+        'odds_2_min': 6,
+        'odds_2_max': 6,
+        'name': 12,
     }
 
 
@@ -28,9 +29,18 @@ class DataFetchSettingsForm(BootstrapStylingBaseForm, forms.ModelForm):
             'title': 'Odds settings',
             'icon': '',
             'icon_color': '',
-            'fields': ('difference_x_range_min', 'difference_x_range_max', 'odds_1_min', 'odds_1_max',
-                       'odds_1_min_second', 'odds_1_max_second')
-         }
+            'fields': ('difference_x_range_min', 'difference_x_range_max',
+                       'odds_1_min',
+                       'odds_1_max',
+                       'odds_2_min',
+                       'odds_2_max'
+                       )
+         },
+        {
+            'title': 'Name',
+            'icon': '',
+            'fields': ('name')
+        }
     )
 
     class Meta:

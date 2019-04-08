@@ -11,7 +11,7 @@
             <li class="nav-item mx-2"><a class="nav-link" href="{% url "datafetch:games_to_bet" %}"><i class="fas fa-cloud-download-alt"></i> Get games</a></li>
             <li class="nav-item mx-2"><a class="nav-link" href="#"><i class="fas fa-list-ul"></i> Bet list</a></li>
             {% if user.user_settings %}
-                <li class="nav-item mx-2"><a class="nav-link" href="{% url "datafetch:datafetch_settings" user.user_settings.pk %}"><i class="fas fa-wrench"></i> Setting</a></li>
+                <li class="nav-item mx-2"><a class="nav-link" href="{% url "datafetch:datafetch_settings_list" %}"><i class="fas fa-wrench"></i> Setting</a></li>
             {% else %}
                 <li class="nav-item mx-2"><a class="nav-link" href="{% url "datafetch:datafetch_settings_create" %}"><i class="fas fa-wrench"></i> Settings
                     <i class="fas fa-exclamation-circle text-danger" data-toggle="tooltip" title="You have no settings, click and create one first." data-placement="right"></i>
