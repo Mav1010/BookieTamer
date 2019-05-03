@@ -15,8 +15,8 @@ from users.models import CustomUser
 @login_required
 def games_to_bet_list(request):
     try:
-        fetch_settings = DataFetchSettings.objects.get(user=request.user)
-        df = get_fortuna_games(fetch_settings)
+        user_settings = DataFetchSettings.objects.filter(user=request.user)
+        df = get_fortuna_games(user_settings)
         html_table = df.sort_values(by=['Match Day', 'X coef']).to_html(index=False)
 
         context = {
