@@ -43,7 +43,6 @@ class DataFetchSettingsList(ListView):
         except DataFetchSettings.DoesNotExist:
             return redirect('datafetch:datafetch_settings_create')
 
-
     def get_context_data(self, **kwargs):
         context = super(DataFetchSettingsList, self).get_context_data(**kwargs)
         try:

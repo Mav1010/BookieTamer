@@ -8,10 +8,16 @@ from core.models import Match, Team, Division
 from datafetch.models import DataFetchSettings
 
 
+def division_choices():
+    divisions = Division.objects.all()
+    choices_leagues = tuple((division.id, division.name) for division in divisions)
+    return choices_leagues
+
+
 class MatchFilter(django_filters.FilterSet):
 
-    division = django_filters.ModelChoiceFilter(queryset=Division.objects.all(),
-                                                widget=forms.Select(attrs={'class':'form-control'}))
+    division = django_filters.MultipleChoiceFilter(choices=division_choices(),
+                                                   widget=forms.SelectMultiple(attrs={'class':'form-control js-multiple-select2'}))
 
     home_team = django_filters.ModelChoiceFilter(widget=forms.Select(attrs={'class':'form-control team-selection'}),
                                                  queryset=Team.objects.all())

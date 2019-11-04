@@ -8,7 +8,7 @@ from django.core.management import BaseCommand
 
 
 leagues = ['ENG-Premier League', 'ESP-La Liga', 'FRA-Ligue 1', 'GER-Bundesliga', 'ITA-Serie A']
-seasons = ['1314', '1415', '1516', '1617', '1718']
+seasons = ['1314', '1415', '1516', '1617', '1718', '1819']
 entry_path = settings.MATCH_HISTORY_DATA_PATH
 all_files = ['{}.csv'.format(league) for league in leagues]
 
@@ -26,11 +26,13 @@ def put_files_together():
                 for line in league_file:
                     complete_file.write(line)
 
+
 def delete_temp_files():
     all_files = ['{}{}.csv'.format(entry_path, league) for league in leagues]
     for file in all_files:
         os.remove(file)
     shutil.rmtree('{}{}'.format(entry_path, 'data'), ignore_errors=True)
+
 
 class Command(BaseCommand):
     help = 'Downloads data from football-data over the specified seasons and leagues'
