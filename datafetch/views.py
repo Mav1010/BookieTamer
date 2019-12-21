@@ -17,7 +17,7 @@ def games_to_bet_list(request):
     try:
         user_settings = DataFetchSettings.objects.filter(user=request.user)
         df = get_fortuna_games(user_settings)
-        html_table = df.sort_values(by=['Match Day', 'X coef']).to_html(index=False)
+        html_table = df.sort_values(by=['Match Day', 'coef']).to_html(index=False)
 
         context = {
             'html_table': html_table,

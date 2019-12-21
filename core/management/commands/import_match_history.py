@@ -1,5 +1,6 @@
 import csv
 import footballdata as fd
+import pandas as pd
 import os
 import shutil
 
@@ -46,6 +47,10 @@ class Command(BaseCommand):
                 except FileExistsError:
                     pass
             games = history.read_games()
+
+            games = pd.DataFrame(games)
+            if 'Referee' in games.columns:
+                games.drop('Referee', axis=1, inplace=True)
             games.to_csv('{}.csv'.format(league))
 
         for league in leagues:
