@@ -5,13 +5,31 @@ import BookieTamer.settings as settings
 
 
 def bookie_probability_real(x1, xX, x2):
-    bookie_probabilty_normal = (1 / x1) + (1 / xX) + (1 / x2)
+    try:
+        bookie_probability_normal = (1 / x1) + (1 / xX) + (1 / x2)
+    except (ZeroDivisionError, TypeError):
+        bookie_probability_normal = 1
+
+    try:
+        bookie_probability_real_1 = round((1 / x1) / bookie_probability_normal, 3)
+    except (ZeroDivisionError, TypeError):
+        bookie_probability_real_1 = 1
+
+    try:
+        bookie_probability_real_2 = round((1 / x2) / bookie_probability_normal, 3)
+    except (ZeroDivisionError, TypeError):
+        bookie_probability_real_2 = 1
+
+    try:
+        bookie_probability_real_x = round((1 / xX) / bookie_probability_normal, 3)
+    except (ZeroDivisionError, TypeError):
+        bookie_probability_real_x = 1
 
     context = {
-        'bookie_probabilty_normal': bookie_probabilty_normal,
-        'bookie_probabilty_real_1': round((1 / x1) / bookie_probabilty_normal, 3),
-        'bookie_probabilty_real_2': round((1 / x2) / bookie_probabilty_normal, 3),
-        'bookie_probabilty_real_X': round((1 / xX) / bookie_probabilty_normal, 3),
+        'bookie_probability_normal': bookie_probability_normal,
+        'bookie_probability_real_1': bookie_probability_real_1,
+        'bookie_probability_real_2': bookie_probability_real_2,
+        'bookie_probability_real_x': bookie_probability_real_x,
     }
     return context
 
@@ -44,16 +62,19 @@ def get_fortuna_games(fetch_settings):
                 continue
             # renaming columns for easier use
             games.columns = ['games', 'x1', 'xX', 'x2', 'date']
-            games['games'] = games['games'].apply(lambda x: x.split("  ")[0])
+            games.loc[:, 'games'] = games['games'].apply(lambda x: x.split("  ")[0])
 
-            games['date'] = games['date'].apply(lambda x: convert_date_to_datetime(x, current_year))
+            games.loc[:, 'date'] = games['date'].apply(lambda x: convert_date_to_datetime(x, current_year))
             games = games[games['date'] <= date_limit]  # get the games within the date limit
 
+            # remove games that are null values in any of the columns (e.g. the game is already underway)
+            games = games.dropna()
             probabilities = bookie_probability_real(games.x1, games.xX, games.x2)
-            games['b_prob_normal'] = round(probabilities.get('bookie_probabilty_normal'), 3)
-            games['b_prob_1'] = probabilities.get('bookie_probabilty_real_1')
-            games['b_prob_X'] = probabilities.get('bookie_probabilty_real_X')
-            games['b_prob_2'] = probabilities.get('bookie_probabilty_real_2')
+
+            games['b_prob_normal'] = round(probabilities.get('bookie_probability_normal'), 3)
+            games['b_prob_1'] = probabilities.get('bookie_probability_real_1')
+            games['b_prob_X'] = probabilities.get('bookie_probability_real_x')
+            games['b_prob_2'] = probabilities.get('bookie_probability_real_2')
             games['prob12_difference'] = round(games.b_prob_1 - games.b_prob_2, 3)
 
             games['bet_X'] = games['prob12_difference'] <= max_difference_x_probability
@@ -66,6 +87,7 @@ def get_fortuna_games(fetch_settings):
 
 
 def convert_date_to_datetime(match_date_str, current_year):
-    match_date = match_date_str.split('\xa0')[0]
-    match_date = datetime.strptime(match_date + str(current_year), '%d.%m.%Y')
-    return match_date
+    if isinstance(match_date_str, str):
+        match_date = match_date_str.split('\xa0')[0]
+        match_date = datetime.strptime(match_date + str(current_year), '%d.%m.%Y')
+        return match_date
