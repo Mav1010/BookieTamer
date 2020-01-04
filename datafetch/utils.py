@@ -75,10 +75,10 @@ def get_fortuna_games(fetch_settings):
             games['b_prob_1'] = probabilities.get('bookie_probability_real_1')
             games['b_prob_X'] = probabilities.get('bookie_probability_real_x')
             games['b_prob_2'] = probabilities.get('bookie_probability_real_2')
-            games['prob12_difference'] = round(games.b_prob_1 - games.b_prob_2, 3)
+            games['prob12_difference'] = abs(round(games.b_prob_1 - games.b_prob_2, 3))
 
-            games['bet_X'] = games['prob12_difference'] <= max_difference_x_probability
             games['bet_1'] = ((odds_1_min_probability <= games['b_prob_1']) & (games['b_prob_1'] <= odds_1_max_probability))
+            games['bet_X'] = games['prob12_difference'] <= max_difference_x_probability
             games['bet_2'] = ((odds_2_min_probability <= games['b_prob_2']) & (games['b_prob_2'] <= odds_2_max_probability))
 
             to_bet = pd.concat([to_bet, games])

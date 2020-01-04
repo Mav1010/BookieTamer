@@ -39,6 +39,7 @@
             $('.dataframe').addClass('table table-striped table-dark');
             $(this).find('thead').find('tr').addClass('text-left');
 
+            $('thead tr:first').addClass('to_bet');
             $('tbody td:contains(True)').parent().addClass('text-success').addClass('to_bet');
 
             var removeColumnName = "<th class='text-center'>Hide</i></th>";
