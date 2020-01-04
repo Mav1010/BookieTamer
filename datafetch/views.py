@@ -38,7 +38,6 @@ class DataFetchSettingsList(ListView):
     def dispatch(self, request, *args, **kwargs):
         try:
             settings = DataFetchSettings.objects.filter(user=self.request.user)
-            print(settings)
             return super(DataFetchSettingsList, self).dispatch(request, *args, **kwargs)
         except DataFetchSettings.DoesNotExist:
             return redirect('datafetch:datafetch_settings_create')

@@ -133,11 +133,11 @@ LOGOUT_REDIRECT_URL = 'home'
 
 """Base urls to scrap data from"""
 
-BASE_FORTUNA_URL= 'https://www.ifortuna.cz/cz/sazeni/fotbal/'
-FORTUNA_URL_SERIE_A = 'serie-a'
-FORTUNA_URL_PREMIER_LEAGUE = 'premier-league'
-FORTUNA_URL_LIGUE_1 = '1-francouzska-liga'
-FORTUNA_URL_PRIMERA_DIVISION = 'primera-division'
-FORTUNA_URL_BUNDESLIGA = 'bundesliga'
+BASE_FORTUNA_URL= 'https://www.ifortuna.cz/sazeni/fotbal/'
+FORTUNA_URL_SERIE_A = '1-italie'
+FORTUNA_URL_PREMIER_LEAGUE = '1-anglie'
+FORTUNA_URL_LIGUE_1 = '1-francie'
+FORTUNA_URL_PRIMERA_DIVISION = '1-spanelsko'
+FORTUNA_URL_BUNDESLIGA = '1-nemecko'
 
 MATCH_HISTORY_DATA_PATH = '/home/maciek/DjangoProjects/BookieTamer/'

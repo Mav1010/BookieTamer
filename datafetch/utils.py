@@ -39,29 +39,27 @@ def get_fortuna_games(fetch_settings):
         date_limit = datetime.today() + timedelta(setting.date_offset)
 
         for league in leagues.all():
-            current_games = pd.read_html(settings.BASE_FORTUNA_URL + league.fortuna_url)[1]
+            current_games = pd.read_html(settings.BASE_FORTUNA_URL + league.fortuna_url)[0]
             try:
                 # get columns of the dataframe by the location of columns,
                 # instead of using names (like Zapas, datum etc.)
-                games = pd.DataFrame(current_games.iloc[:, [0, 1, 2, 3, 8]])
+                games = current_games[['Zápas sázka na výsledek zápasu', '1', '0', '2', 'datum']]
             except KeyError:
                 continue
             # renaming columns for easier use
             games.columns = ['games', 'x1', 'xX', 'x2', 'date']
-
+            games['games'] = games['games'].apply(lambda x: x[0:20])
             for index, row in games.iterrows():
                 # check if row has empty values
                 if not row.isnull().any():
-                    # convert string to date object
+                    # convert string to date object 03.01. 21:00
                     try:
-                        match_day = datetime.strptime(row.date.split(" ")[0] + str(current_year), '%d.%m.%Y')
+                        match_day = datetime.strptime(row.date.split(" ")[0][:6] + str(current_year), '%d.%m.%Y') #TODO row.date.split(" ")[0][:6] may be causing problems
                     except ValueError:
                         match_day = None
                         continue
                 else:
-
                     match_day = None
-
                 if (not row.isnull().any()) and (match_day <= date_limit):
                     teams = row['games']
                     coef_1 = float(row['x1'])
