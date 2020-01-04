@@ -18,7 +18,8 @@
                             <h1 class="h4 mt-1 font-weight-bold">Games to bet on</h1>
                     </div>
                     <div class="col-sm-6 text-right">
-                        <button class="btn btn-outline-primary show-all">Show all</button>
+                        <button class="btn btn-outline-primary js-show-to-bet">Show to bet</button>
+                        <button class="btn btn-outline-primary js-show-all">Show all</button>
                     </div>
                      {% endif %}
                 </div>
@@ -38,18 +39,23 @@
             $('.dataframe').addClass('table table-striped table-dark');
             $(this).find('thead').find('tr').addClass('text-left');
 
+            $('tbody td:contains(True)').parent().addClass('text-success').addClass('to_bet');
+
             var removeColumnName = "<th class='text-center'>Hide</i></th>";
             $('thead').find('tr').append(removeColumnName);
 
             var removeButton = "<td class='text-center text-success'><i class=\"fas fa-check mark-hide\" style='cursor: pointer;'></i></td>";
             $('tbody').children('tr').append(removeButton);
             $('.mark-hide').on('click', function () {
-                console.log('dsfd');
                 $(this).parents('tr').fadeOut();
             });
 
-            $('.show-all').on('click', function () {
+            $('.js-show-all').on('click', function () {
                 $('tbody').children().fadeIn();
+            });
+
+            $('.js-show-to-bet').on('click', function () {
+                $('tr:not(".to_bet")').fadeOut();
             });
 
         });

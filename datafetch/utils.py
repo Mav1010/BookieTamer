@@ -19,11 +19,7 @@ def bookie_probability_real(x1, xX, x2):
 def get_fortuna_games(fetch_settings):
     current_year = date.today().year
 
-    games_to_book = {'Match Day': [],
-                     'Teams': [],
-                     'Betting reason': [],
-                     'coef': [],
-                     }
+    to_bet = pd.DataFrame()
 
     for setting in fetch_settings:
         name = setting.name
@@ -48,46 +44,28 @@ def get_fortuna_games(fetch_settings):
                 continue
             # renaming columns for easier use
             games.columns = ['games', 'x1', 'xX', 'x2', 'date']
-            games['games'] = games['games'].apply(lambda x: x[0:20])
-            for index, row in games.iterrows():
-                # check if row has empty values
-                if not row.isnull().any():
-                    # convert string to date object 03.01. 21:00
-                    try:
-                        match_day = datetime.strptime(row.date.split(" ")[0][:6] + str(current_year), '%d.%m.%Y') #TODO row.date.split(" ")[0][:6] may be causing problems
-                    except ValueError:
-                        match_day = None
-                        continue
-                else:
-                    match_day = None
-                if (not row.isnull().any()) and (match_day <= date_limit):
-                    teams = row['games']
-                    coef_1 = float(row['x1'])
-                    coef_x = float(row['xX'])
-                    coef_2 = float(row['x2'])
+            games['games'] = games['games'].apply(lambda x: x.split("  ")[0])
 
-                    # gets real bookmakers probabilities
-                    coef_probability = bookie_probability_real(coef_1, coef_x, coef_2)
-                    difference = round(
-                        (coef_probability['bookie_probabilty_real_1']) - (coef_probability['bookie_probabilty_real_2']), 3)
+            games['date'] = games['date'].apply(lambda x: convert_date_to_datetime(x, current_year))
+            games = games[games['date'] <= date_limit]  # get the games within the date limit
 
-                    if difference and max_difference_x_probability:
-                        if abs(difference) <= max_difference_x_probability:
-                            games_to_book['Match Day'].append(match_day)
-                            games_to_book['Teams'].append('{} - {}'.format(teams.split(" ")[0], teams.split(" ")[2]))
-                            games_to_book['Betting reason'].append('Draw: {}'.format(difference))
-                            games_to_book['coef'].append(coef_x)
-                    if odds_1_min_probability and odds_1_max_probability:
-                        if (odds_1_min_probability <= coef_probability['bookie_probabilty_real_1'] <= odds_1_max_probability):
-                            games_to_book['Match Day'].append(match_day)
-                            games_to_book['Teams'].append(teams[:-3])
-                            games_to_book['Betting reason'].append('Home: {}'.format(coef_probability['bookie_probabilty_real_1']))
-                            games_to_book['coef'].append(coef_1)
-                    if odds_2_min_probability and odds_2_max_probability:
-                        if (odds_2_min_probability <= coef_probability['bookie_probabilty_real_2'] <= odds_2_max_probability):
-                            games_to_book['Match Day'].append(match_day)
-                            games_to_book['Teams'].append(teams[:-3])
-                            games_to_book['Betting reason'].append('Away: {}'.format(coef_probability['bookie_probabilty_real_1']))
-                            games_to_book['coef'].append(coef_2)
+            probabilities = bookie_probability_real(games.x1, games.xX, games.x2)
+            games['b_prob_normal'] = round(probabilities.get('bookie_probabilty_normal'), 3)
+            games['b_prob_1'] = probabilities.get('bookie_probabilty_real_1')
+            games['b_prob_X'] = probabilities.get('bookie_probabilty_real_X')
+            games['b_prob_2'] = probabilities.get('bookie_probabilty_real_2')
+            games['prob12_difference'] = round(games.b_prob_1 - games.b_prob_2, 3)
 
-    return pd.DataFrame(games_to_book)
+            games['bet_X'] = games['prob12_difference'] <= max_difference_x_probability
+            games['bet_1'] = ((odds_1_min_probability <= games['b_prob_1']) & (games['b_prob_1'] <= odds_1_max_probability))
+            games['bet_2'] = ((odds_2_min_probability <= games['b_prob_2']) & (games['b_prob_2'] <= odds_2_max_probability))
+
+            to_bet = pd.concat([to_bet, games])
+
+    return pd.DataFrame(to_bet)
+
+
+def convert_date_to_datetime(match_date_str, current_year):
+    match_date = match_date_str.split('\xa0')[0]
+    match_date = datetime.strptime(match_date + str(current_year), '%d.%m.%Y')
+    return match_date
